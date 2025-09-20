@@ -52,8 +52,6 @@ opensta --version # Verify installation
 ### Quick Start
 Run `opensta` on your SDC and SPEF files to analyze timing.
 
-![OpenSTA Logo](https://opensta.org/img/opensta-logo.png) 
-
 ---
 
 ## Ngspice - Circuit Simulator
