@@ -5,10 +5,16 @@
 Welcome to the Week 0 setup! This week focuses on installing essential EDA tools for the RISC-V tapeout project.
 
 ## 🚦 Objective
-Get your environment ready for the RISC-V tapeout journey by installing and testing **Yosys**, **GTKWave**, and **Iverilog**.
+Get your environment ready for the RISC-V tapeout journey by installing and testing the full toolchain for this course including Yosys, GTKWave, Iverilog, OpenSTA, Ngspice, Magic, OpenLANE, this repository aims to empower learners to:
+
+- Understand and navigate the complete EDA tool ecosystem used in open-source VLSI design and RISC-V tapeout workflows.
+- Confidently use each tool for tasks such as static timing analysis (OpenSTA), circuit simulation (Ngspice), physical layout design (Magic), and RTL-to-GDSII flow automation (OpenLANE).
+- Apply foundational principles of digital design, verification, and backend physical implementation through hands-on tool usage.
+- Develop troubleshooting skills to identify and resolve common setup and runtime issues.
+
 
 ## 🗂️ Tasks
-- Install Yosys, GTKWave, Iverilog on Ubuntu
+- Install Yosys, GTKWave, Iverilog, OpenSTA, Ngspice, Magic, OpenLANE on Ubuntu
 - Validate installations with sample command runs
 - Document any issues faced and their fixes
   
@@ -16,16 +22,19 @@ Get your environment ready for the RISC-V tapeout journey by installing and test
 ## 📝 Step-by-Step Guide
 
 ### Yosys Installation
+**Yosys:** An open-source Verilog RTL synthesis tool that converts behavioral hardware designs into gate-level netlists.
 sudo apt update
 sudo apt install yosys
 yosys -V # Check version
 <img width="733" height="491" alt="image (1)" src="https://github.com/user-attachments/assets/017f4415-a26b-40a1-b152-132e001119e8" />
 
 ### GTKWave
+**GTKWave:** A waveform viewer used to visualize simulation outputs and analyze digital signals during hardware verification.
 sudo apt install gtkwave
 
 
 ### Iverilog
+**Iverilog:** A free Verilog simulation and synthesis tool that compiles and runs hardware description language designs for testing and verification.
 sudo apt install iverilog
 
 ## OpenSTA - Static Timing Analyzer
