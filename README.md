@@ -23,6 +23,7 @@ Get your environment ready for the RISC-V tapeout journey by installing and test
 
 ### Yosys Installation
 **Yosys:** An open-source Verilog RTL synthesis tool that converts behavioral hardware designs into gate-level netlists.
+
 sudo apt update
 sudo apt install yosys
 yosys -V # Check version
@@ -30,11 +31,13 @@ yosys -V # Check version
 
 ### GTKWave
 **GTKWave:** A waveform viewer used to visualize simulation outputs and analyze digital signals during hardware verification.
+
 sudo apt install gtkwave
 
 
 ### Iverilog
 **Iverilog:** A free Verilog simulation and synthesis tool that compiles and runs hardware description language designs for testing and verification.
+
 sudo apt install iverilog
 
 ## OpenSTA - Static Timing Analyzer
