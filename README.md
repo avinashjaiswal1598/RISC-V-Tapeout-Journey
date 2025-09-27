@@ -24,6 +24,7 @@ Get your environment ready for the RISC-V tapeout journey by installing and test
 ### Yosys Installation
 **Yosys:** An open-source Verilog RTL synthesis tool that converts behavioral hardware designs into gate-level netlists.
 
+
 sudo apt update
 sudo apt install yosys
 yosys -V # Check version
@@ -116,6 +117,87 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
 - [Yosys Manual](https://yosyshq.readthedocs.io/)
 - [GTKWave Guide](http://gtkwave.sourceforge.net/)
 - [Icarus Verilog Docs](http://iverilog.icarus.com/)
+
+---
+# RISC-V Tapeout Journey - Week 1
+
+## Week 1: RTL Design & Synthesis Foundations
+
+### DAY 1 – Introduction to Verilog RTL Design & Synthesis
+
+#### a. Introduction to Open Source Simulator: Icarus Verilog (Iverilog)
+- **Objective:**  
+  Gain familiarity with Icarus Verilog as an open-source tool for compiling and simulating Verilog RTL designs.
+- **Key Concepts:**  
+  Icarus Verilog enables simulation of hardware modules before synthesis, helps in design verification, and works seamlessly with VCD output for visualization.
+
+#### b. Labs: Using Iverilog and GTKWave
+- **Simulation Workflow:**  
+  - Write Verilog design and appropriate testbench files.
+  - Compile both using `iverilog`, producing a simulation executable.  
+    ```
+    iverilog -o sim_out my_design.v my_testbench.v
+    ```
+  - Run the simulation and generate a VCD (Value Change Dump) file:  
+    ```
+    vvp sim_out
+    ```
+  - View waveforms with GTKWave for in-depth signal analysis:  
+    ```
+    gtkwave dump.vcd
+    ```
+- **Deliverable:**  
+  
+
+#### c. Introduction to Yosys and Logic Synthesis
+- **Overview:**  
+  Yosys is an open-source framework for Verilog RTL synthesis, transforming Verilog code into a gate-level netlist.
+- **Flow:**  
+  - Install Yosys and clone the Sky130 PDKs for open-source cell libraries.
+  - Run Yosys scripts to synthesize designs targeting `sky130` libraries.
+    ```
+    yosys
+    # In the Yosys prompt or via script:
+    read_verilog my_design.v
+    synth -top my_design
+    dfflibmap -liberty sky130_fd_sc_hd__tt_025C_1v80.lib
+    write_verilog my_design_synth.v
+    ```
+- **Lab Activity:**  
+  Synthesize a sample Verilog design, examine synthesized netlist, and include a brief note on synthesis optimizations made by Yosys.
+
+---
+
+### DAY 2 – Timing Libraries, Synthesis Strategies, and Flop Coding Styles
+
+#### a. Introduction to Timing Libraries
+- **Purpose:**  
+  Timing libraries (e.g., Liberty format `.lib` files) provide technology-specific timing, power, and functional details for each standard cell.
+- **Importance:**  
+  Essential for accurate gate-level synthesis and subsequent STA (Static Timing Analysis).
+
+#### b. Hierarchical Vs Flat Synthesis
+- **Hierarchical Synthesis:**  
+  - Synthesis happens module-wise, preserving design partitions and module boundaries.
+  - Easier for debugging large designs, but may miss some cross-boundary optimizations.
+- **Flat Synthesis:**  
+  - All RTL is flattened before synthesis, enabling cross-module optimizations.
+  - Can result in better timing/area but at the cost of complexity in tracing.
+- **Key Takeaway:**  
+  Know when to choose hierarchical vs. flat based on design size and optimization goals.
+
+#### c. Various Flop Coding Styles and Optimization
+- **Flop (D Flip-Flop) Coding Styles:**  
+  - Different ways to model synchronous (clocked) sequential circuits in RTL.
+  - Example:  
+    ```
+    always @(posedge clk)
+      q <= d;
+    ```
+  - Efficient coding simplifies synthesis and physical timing closure.
+- **Optimization Notes:**  
+  - Prefer synchronous resets, use consistent coding styles, and avoid latches unless explicitly needed.
+  - Review the synthesized netlist to confirm flops are correctly inferred.
 
 ---
 
