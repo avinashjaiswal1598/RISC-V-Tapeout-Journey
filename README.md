@@ -288,17 +288,6 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
   - [Skywater PDK GitHub](https://github.com/google/skywater-pdk) — For standard cell libraries and design kits referencing Sky130.  
   - [The OpenROAD Project](https://theopenroadproject.org/) — Automated RTL-to-GDSII open-source flow tools.
 
----
-
-### 💡 Best Practices and Tips
-
-- Maintain clear and consistent coding styles, especially for sequential logic, to avoid synthesis/simulation mismatches.
-- Always check sensitivity lists in `always` blocks to ensure full coverage.
-- Use version control branches effectively to organize tasks or projects by week or functionality.
-- Regularly review synthesized netlists and reports to understand tool optimizations and to debug issues early.
-- Include testbenches and waveform analysis as part of routine validation.
-- Document all your experiments, bugs, and fixes — it creates a helpful learning and troubleshooting reference.
-
 
 ---
 
@@ -308,6 +297,5 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
 
 ---
 
-**[⬆ Back to Table of Contents](#table-of-contents)**
 
 
