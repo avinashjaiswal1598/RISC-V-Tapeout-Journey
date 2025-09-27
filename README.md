@@ -201,3 +201,113 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
 
 ---
 
+### DAY 3 – Combinational and Sequential Optimization
+
+#### a. Introduction to Optimization
+- Objective: Understand the importance of optimizing Verilog RTL code for better performance, area, and power.
+- Optimization ensures efficient hardware implementation during synthesis.
+
+#### b. Combinational Logic Optimization
+- Focus on reducing logic complexity.
+- Use Boolean algebra and synthesis tool optimizations.
+- Example: Minimize gates and logic levels for speed and area.
+
+#### c. Sequential Logic Optimization
+- Focus on flip-flops and registers.
+- Optimize clock enabling, redundant registers removal, and retiming.
+
+#### d. Sequential Optimization for Unused Output
+- Remove or optimize sequential logic driving unused output signals.
+- Helps reduce unnecessary power and area overhead in the design.
+
+---
+
+### DAY 4 – GLS Blocking vs Non-blocking and Synthesis Simulation Mismatch
+
+#### a. GLS, Synthesis Simulation Mismatch and Blocking/Non-blocking Statements
+- Gate Level Simulation (GLS) verifies the post-synthesis netlist using the same testbench.
+- Synthesis-simulation mismatch occurs due to:
+  - Missing sensitivity lists in `always` blocks.
+  - Improper use of blocking (`=`) vs non-blocking (`<=`) assignments.
+  - Non-standard Verilog coding styles.
+- Blocking assignments execute sequentially within an `always` block; non-blocking executes all RHS first then updates LHS, enabling parallelism.
+- Incorrect use can lead to simulation mismatches and inferred latches.
+
+#### b. Labs on GLS and Synthesis Simulation Mismatch
+- Perform GLS on synthesized netlists.
+- Compare RTL simulation waveforms to netlist waveforms in GTKWave.
+
+#### c. Labs on Synthesis Simulation Mismatch for Blocking Statements
+- Experiment by deliberately coding with only blocking assignments.
+- Observe mismatches and learn best coding practices to avoid them.
+
+---
+
+### DAY 5 – Optimization in Synthesis
+
+#### a. If Case Construct
+- How conditional statements are handled and optimized during synthesis.
+
+#### b. Labs on Incomplete If Case
+- Understand problems when if-else statements do not cover all conditions.
+- Observe synthesis impact and unintended latch inference.
+
+#### c. Labs on Incomplete Overlapping Case
+- Study how overlapping case statements can lead to mismatches or unpredictable behavior.
+- Learn to write mutually exclusive cases for reliable synthesis.
+
+#### d. For Loop and For Generate
+- Using `for` loops for replicating hardware blocks.
+- `for-generate` construct for generating repetitive RTL structures efficiently.
+
+#### e. Labs on For Loop and For Generate
+- Write and synthesize designs leveraging loops and generate blocks.
+- Measure the impact on design size and synthesis results.
+
+---
+
+---
+
+## Week 1: Additional Resources & Best Practices
+
+### 📚 References & Further Reading
+
+- **Verilog HDL and RTL Design**  
+  - *“Verilog HDL”* by Samir Palnitkar — A foundational book for Verilog syntax and design principles.  
+  - *“Digital Design and Computer Architecture”* by Harris & Harris — Covers RTL design concepts clearly.  
+
+- **Synthesis and Optimization**  
+  - [Yosys Open SYnthesis Suite Documentation](https://yosyshq.net/yosys/) — Official Yosys documentation for logic synthesis.  
+  - [IEEE Std 1800-2017 SystemVerilog Specification](https://ieeexplore.ieee.org/document/8299595) — For advanced RTL coding concepts.
+
+- **Simulation Mismatch and Coding Guidelines**  
+  - "Nonblocking vs Blocking Assignments in Verilog" by Sunburst Design — Detailed explanation of blocking vs non-blocking assignment behaviors.  
+  - [ZipCPU Blog: Why Synthesis Might Not Match Simulation](https://zipcpu.com/blog/2018/08/04/sim-mismatch.html) — Practical discussion on sim-synthesis mismatches.
+
+- **Skywater Sky130 PDK & Open Source ASIC Tools**  
+  - [Skywater PDK GitHub](https://github.com/google/skywater-pdk) — For standard cell libraries and design kits referencing Sky130.  
+  - [The OpenROAD Project](https://theopenroadproject.org/) — Automated RTL-to-GDSII open-source flow tools.
+
+---
+
+### 💡 Best Practices and Tips
+
+- Maintain clear and consistent coding styles, especially for sequential logic, to avoid synthesis/simulation mismatches.
+- Always check sensitivity lists in `always` blocks to ensure full coverage.
+- Use version control branches effectively to organize tasks or projects by week or functionality.
+- Regularly review synthesized netlists and reports to understand tool optimizations and to debug issues early.
+- Include testbenches and waveform analysis as part of routine validation.
+- Document all your experiments, bugs, and fixes — it creates a helpful learning and troubleshooting reference.
+
+
+---
+
+**Thank you for exploring the RISC-V Tapeout Journey!**
+
+*Feel free to contribute, raise issues, or suggest improvements to make this learning resource even better.*
+
+---
+
+**[⬆ Back to Table of Contents](#table-of-contents)**
+
+
