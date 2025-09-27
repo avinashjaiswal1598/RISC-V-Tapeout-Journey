@@ -1,9 +1,26 @@
-# 🚀 RISC-V Tapeout Program – Week 0: Toolchain Installation
+# 🚀 RISC-V Tapeout Program 
 <img width="733" height="491" alt="image" src="https://github.com/user-attachments/assets/71c03229-039a-4104-b87d-4fdc287845ad" />
 
+Dive into my **RISC-V Tapeout Journey** — a hands-on exploration of chip design and tapeout fundamentals.
+This repository neatly captures my **week-by-week** and **day-by-day** progress, making it easy to follow the complete learning path from basics to implementation.
+
+## 📑 Quick Navigation
+- [Week 0 - Toolchain Installation](#week-0--Toolchain Installation)  
+- [Week 1 – RTL Design & Synthesis Foundations](#week-1--RTL Design & Synthesis Foundations)  
+  - [Day 1 –Introduction to Verilog RTL Design & Synthesis](#day-1--Introduction to Verilog RTL Design & Synthesis)  
+  - [Day 2 – Timing Libs & Flop Coding Styles](#day-2--timing-libs--flop-coding-styles)  
+  - [Day 3 – Combinational & Sequential Optimizations](#day-3--combinational--sequential-optimizations)  
+  - [Day 4 – GLS & Blocking vs Non-Blocking](#day-4--gls--blocking-vs-non-blocking)  
+  - [Day 5 – DFF Designs, Resets & Testbenches](#day-5--dff-designs-resets--testbenches)  
+
+---
+
+## 📦 Week 0 –: Toolchain Installation
 
 Welcome to the Week 0 setup! This week focuses on installing essential EDA tools for the RISC-V tapeout project.
 
+<details>
+  <summary>Expand to View Details</summary>
 ## 🚦 Objective
 Get your environment ready for the RISC-V tapeout journey by installing and testing the full toolchain for this course including Yosys, GTKWave, Iverilog, OpenSTA, Ngspice, Magic, OpenLANE, this repository aims to empower learners to:
 
@@ -128,6 +145,8 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
 - [GTKWave Guide](http://gtkwave.sourceforge.net/)
 - [Icarus Verilog Docs](http://iverilog.icarus.com/)
 
+
+</details>
 ---
 # RISC-V Tapeout Journey - Week 1
 
@@ -135,6 +154,7 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
 
 ### DAY 1 – Introduction to Verilog RTL Design & Synthesis
 
+<details>
 #### a. Introduction to Open Source Simulator: Icarus Verilog (Iverilog)
 - **Objective:**  
   Gain familiarity with Icarus Verilog as an open-source tool for compiling and simulating Verilog RTL designs.
@@ -175,11 +195,12 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
     ```
 - **Lab Activity:**  
   Synthesize a sample Verilog design, examine synthesized netlist, and include a brief note on synthesis optimizations made by Yosys.
-
+</details>
 ---
 
 ### DAY 2 – Timing Libraries, Synthesis Strategies, and Flop Coding Styles
 
+<details>
 #### a. Introduction to Timing Libraries
 - **Purpose:**  
   Timing libraries (e.g., Liberty format `.lib` files) provide technology-specific timing, power, and functional details for each standard cell.
@@ -208,11 +229,12 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
 - **Optimization Notes:**  
   - Prefer synchronous resets, use consistent coding styles, and avoid latches unless explicitly needed.
   - Review the synthesized netlist to confirm flops are correctly inferred.
-
+</details>
 ---
 
 ### DAY 3 – Combinational and Sequential Optimization
 
+<details>
 #### a. Introduction to Optimization
 - Objective: Understand the importance of optimizing Verilog RTL code for better performance, area, and power.
 - Optimization ensures efficient hardware implementation during synthesis.
@@ -229,11 +251,12 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
 #### d. Sequential Optimization for Unused Output
 - Remove or optimize sequential logic driving unused output signals.
 - Helps reduce unnecessary power and area overhead in the design.
-
+</details>
 ---
 
 ### DAY 4 – GLS Blocking vs Non-blocking and Synthesis Simulation Mismatch
 
+<details>
 #### a. GLS, Synthesis Simulation Mismatch and Blocking/Non-blocking Statements
 - Gate Level Simulation (GLS) verifies the post-synthesis netlist using the same testbench.
 - Synthesis-simulation mismatch occurs due to:
@@ -251,10 +274,11 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
 - Experiment by deliberately coding with only blocking assignments.
 - Observe mismatches and learn best coding practices to avoid them.
 
+</details>
 ---
 
 ### DAY 5 – Optimization in Synthesis
-
+<details>
 #### a. If Case Construct
 - How conditional statements are handled and optimized during synthesis.
 
@@ -274,8 +298,9 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
 - Write and synthesize designs leveraging loops and generate blocks.
 - Measure the impact on design size and synthesis results.
 
----
 
+---
+</details>
 ---
 
 ## Week 1: Additional Resources & Best Practices
