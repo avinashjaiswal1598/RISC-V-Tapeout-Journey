@@ -24,31 +24,35 @@ Get your environment ready for the RISC-V tapeout journey by installing and test
 ### Yosys Installation
 **Yosys:** An open-source Verilog RTL synthesis tool that converts behavioral hardware designs into gate-level netlists.
 
-
+```
 sudo apt update
 sudo apt install yosys
 yosys -V # Check version
+```
 <img width="733" height="491" alt="image (1)" src="https://github.com/user-attachments/assets/017f4415-a26b-40a1-b152-132e001119e8" />
 
 ### GTKWave
 **GTKWave:** A waveform viewer used to visualize simulation outputs and analyze digital signals during hardware verification.
-
+```
 sudo apt install gtkwave
-
+```
 
 ### Iverilog
 **Iverilog:** A free Verilog simulation and synthesis tool that compiles and runs hardware description language designs for testing and verification.
-
+```
 sudo apt install iverilog
+```
 
 ## OpenSTA - Static Timing Analyzer
 
 OpenSTA is a fast and open-source Static Timing Analyzer for VLSI designs.
 
 ### Installation (Ubuntu 22.04+)
+```
 sudo apt update
 sudo apt install opensta
 opensta --version # Verify installation
+```
 
 ### Quick Start
 Run `opensta` on your SDC and SPEF files to analyze timing.
@@ -60,9 +64,11 @@ Run `opensta` on your SDC and SPEF files to analyze timing.
 Ngspice simulates analog electronic circuits using SPICE.
 
 ### Installation
+```
 sudo apt update
 sudo apt install ngspice
 ngspice -v # Check version
+```
 
 ### Basic Test
 Run `ngspice` and load a sample test circuit file `.cir`.
@@ -74,6 +80,7 @@ Run `ngspice` and load a sample test circuit file `.cir`.
 Magic is a classic, easy-to-use VLSI layout tool.
 
 ### Installation from source
+```
 sudo apt update
 sudo apt install git build-essential tcl-dev tk-dev libx11-dev
 git clone https://github.com/RTimothyEdwards/magic.git
@@ -82,6 +89,7 @@ cd magic
 make
 sudo make install
 magic -version
+```
 
 ### Usage
 Launch `magic` and start creating or editing layouts.
@@ -93,9 +101,11 @@ Launch `magic` and start creating or editing layouts.
 OpenLANE automates the full digital ASIC flow.
 
 ### Installation via Docker
+```
 git clone https://github.com/The-OpenROAD-Project/OpenLane.git
 cd OpenLane
 ./quick_start.sh
+```
 
 ### Running a Design
 Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
