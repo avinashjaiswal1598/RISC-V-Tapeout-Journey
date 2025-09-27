@@ -7,7 +7,7 @@ This repository neatly captures my **week-by-week** and **day-by-day** progress,
 ## 📑 Quick Navigation
 - [Week 0 - Toolchain Installation](#week-0--Toolchain Installation)  
 - [Week 1 – RTL Design & Synthesis Foundations](#week-1--RTL Design & Synthesis Foundations)  
-  - [Day 1 –Introduction to Verilog RTL Design & Synthesis](#day-1--Introduction to Verilog RTL Design & Synthesis)  
+  - [Day 1 – Introduction to Verilog RTL Design & Synthesis](#day-1--introduction to verilog rtl design & synthesis)  
   - [Day 2 – Timing Libs & Flop Coding Styles](#day-2--timing-libs--flop-coding-styles)
   - [Day 3 – Combinational & Sequential Optimizations](#day-3--combinational--sequential-optimizations)  
   - [Day 4 – GLS & Blocking vs Non-Blocking](#day-4--gls--blocking-vs-non-blocking)  
