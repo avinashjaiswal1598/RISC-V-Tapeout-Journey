@@ -428,8 +428,7 @@ The pre-synthesis simulation of **VSDBabySoC** was analyzed using GTKWave. The m
 
 **GTKWave Screenshot:**  
 
-![GTKWave Pre-Synthesis Simulation](<img width="1280" height="800" alt="Screenshot from 2025-10-04 19-50-02" src="https://github.com/user-attachments/assets/ff40338a-db8f-4519-8f53-2672f658a081" />
-)
+!<img width="1280" height="800" alt="Screenshot from 2025-10-04 19-50-02" src="https://github.com/user-attachments/assets/ff40338a-db8f-4519-8f53-2672f658a081" />
                                                  |
 
 ---
