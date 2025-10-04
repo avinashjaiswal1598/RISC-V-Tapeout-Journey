@@ -406,7 +406,7 @@ vvp output/pre_synth_sim/pre_synth_sim.out
 
 # 4️⃣ View waveforms
 gtkwave output/pre_synth_sim/pre_synth_sim.vcd &
-
+```
 
 | Observation            | Description                                                                                                                                                |
 | :--------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -435,23 +435,26 @@ The compiler failed to recognize interlinked modules (`avsddac`, `avsdpll`, and 
 find src/module -type f -name "*.v"
 
 # Step 2: Compiled with explicit include and macro
+```
 iverilog -g2012 -o output/pre_synth_sim/pre_synth_sim.out -DPRE_SYNTH_SIM \
   -I src/module \
   src/module/testbench.v \
   src/module/vsdbabysoc.v \
   src/module/avsddac.v \
   src/module/avsdpll.v
+```
 
 # Step 3: Verified simulation output and waveform dump
+```
 vvp output/pre_synth_sim/pre_synth_sim.out
 gtkwave output/pre_synth_sim/pre_synth_sim.vcd &
-
+```
 
 ---
 
 ## 🧠 Learnings
 
-```markdown
+markdown
 1. **Hierarchical Design Understanding**
    - Gained hands-on experience with how Verilog interprets hierarchical module structures.
    - Realized that top-level modules must explicitly reference their submodules during compilation.
