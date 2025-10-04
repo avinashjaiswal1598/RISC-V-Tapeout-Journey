@@ -427,9 +427,7 @@ The pre-synthesis simulation of **VSDBabySoC** was analyzed using GTKWave. The m
 - DAC output (`out`) shows expected waveform after reset, confirming correct operation of the SoC modules.  
 
 **GTKWave Screenshot:**  
-
-!<img width="1280" height="800" alt="Screenshot from 2025-10-04 19-50-02" src="https://github.com/user-attachments/assets/ff40338a-db8f-4519-8f53-2672f658a081" />
-                                                 |
+<img width="1062" height="574" alt="Screenshot from 2025-10-04 20-29-03" src="https://github.com/user-attachments/assets/067d210f-e556-4d2e-a5c5-d4f3563dfd5a" />
 
 ---
 
