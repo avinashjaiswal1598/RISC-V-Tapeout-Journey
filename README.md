@@ -408,7 +408,10 @@ iverilog -g2012 -o output/pre_synth_sim/pre_synth_sim.out -DPRE_SYNTH_SIM \\
 vvp output/pre_synth_sim/pre_synth_sim.out
 
 # 4️⃣ View waveforms
-gtkwave output/pre_synth_sim/pre_synth_sim.vcd &
+gtkwave output/pre_synth_sim/pre_synth_sim.vcd
+
+<img width="844" height="512" alt="Screenshot from 2025-10-04 21-03-21" src="https://github.com/user-attachments/assets/4cd520cd-f2dc-4693-bee7-370b61bbb519" />
+
 ```
 ## 🧩 Pre-Synthesis Simulation Waveform Analysis
 
