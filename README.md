@@ -331,6 +331,156 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
 *Feel free to contribute, raise issues, or suggest improvements to make this learning resource even better.*
 
 ---
+# 🧠 Week 2 – BabySoC Fundamentals & Functional Modelling  
+
+<details>
+<summary>📘 Click to expand summary</summary>
+
+This week focused on building a strong understanding of **System-on-Chip (SoC)** fundamentals and performing **functional modelling of BabySoC** using open-source tools — **Icarus Verilog** and **GTKWave**.  
+The goal was to connect theoretical SoC concepts to hands-on simulations, bridging the gap between architecture and practical realization.
+</details>
+
+---
+
+## 🎯 Objectives  
+- Understand the **core building blocks** of a System-on-Chip (CPU core, memory, interconnect, and peripherals).  
+- Explore how these components communicate via buses and control signals.  
+- Practice **functional modelling** of BabySoC before moving toward synthesis and layout.  
+- Simulate the design using open-source EDA tools and interpret the resulting waveforms.
+
+---
+
+## 🧩 Theoretical Understanding (Part 1)
+
+### 🔍 What is a System-on-Chip (SoC)?  
+A **System-on-Chip** integrates multiple subsystems — processor, memory, I/O controllers, clocks and power management — on a single silicon die.  
+It enables compact, power-efficient designs used in smartphones, IoT devices, and embedded systems.
+
+### ⚙️ Key Components  
+| Component | Function |
+|:--|:--|
+| CPU (Core) | Performs computation and controls system operation. |
+| Memory (RAM/ROM) | Stores instructions and data. |
+| Interconnect Bus | Facilitates data transfer between CPU and peripherals. |
+| Peripherals | Provide I/O capabilities such as UART, timers, ADC/DAC. |
+| Clock and Reset | Synchronize and initialize system modules. |
+
+### 🧮 Why BabySoC?  
+BabySoC offers a **simplified SoC architecture** that is ideal for learning without overwhelming complexity.  
+It integrates minimal but representative modules to demonstrate real-world SoC concepts and dataflow.
+
+### 🧠 Role of Functional Modelling  
+Functional modelling validates the design logic before RTL synthesis and physical implementation.  
+It ensures that module interconnections and signal propagation behave as expected.
+
+---
+
+## 🧪 Hands-On Functional Modelling (Part 2)
+
+### 🔗 Reference  
+👉 [VSDBabySoC Project – Lab Guide](https://github.com/hemanthkumardm/SFAL-VSD-SoC-Journey/tree/main/12.%20VSDBabySoC%20Project)
+
+---
+
+### 🧰 Tools Used
+| Tool | Purpose |
+|:--|:--|
+| Icarus Verilog (iverilog) | Compiles and simulates Verilog source files. |
+| GTKWave | Visualizes simulation waveforms (.vcd files). |
+
+---
+
+### ⚙️ Implementation Steps
+
+```bash
+# 1️⃣ Clone the project
+git clone https://github.com/hemanthkumardm/SFAL-VSD-SoC-Journey.git
+cd "SFAL-VSD-SoC-Journey/12. VSDBabySoC Project"
+
+# 2️⃣ Compile the BabySoC modules
+iverilog -g2012 -o output/pre_synth_sim/pre_synth_sim.out -DPRE_SYNTH_SIM \\
+  -I src/module src/module/testbench.v src/module/vsdbabysoc.v src/module/avsddac.v src/module/avsdpll.v
+
+# 3️⃣ Run the simulation
+vvp output/pre_synth_sim/pre_synth_sim.out
+
+# 4️⃣ View waveforms
+gtkwave output/pre_synth_sim/pre_synth_sim.vcd &
 
 
+| Observation            | Description                                                                                                                                                |
+| :--------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Reset Operation**    | During reset, all internal registers and output signals return to known states. The waveform showed a clean reset pulse, confirming proper initialization. |
+| **Clock Behavior**     | Verified 50% duty cycle and stable frequency across simulation time.                                                                                       |
+| **Data Flow**          | Observed data propagation from CPU to DAC modules and feedback through PLL signals.                                                                        |
+| **Module Interaction** | Inter-module signals showed correct handshaking behavior between `vsdbabysoc`, `avsddac`, and `avsdpll`.                                                   |
+
+---
+
+## 🧰 Troubleshooting (Detailed Case Study – Issue #28)
+
+### 🧩 Problem Encountered  
+While simulating the BabySoC design, `iverilog` threw multiple *module hierarchy and inclusion errors*, similar to those discussed in [India RISC-V Tapeout Issue #28](https://github.com/vsdip/IndiaRiscvTapeoutProgram/issues/28#issuecomment-3360228338).  
+The compiler failed to recognize interlinked modules (`avsddac`, `avsdpll`, and top-level `vsdbabysoc.v`), causing incomplete netlist generation.
+
+### ⚙️ Root Cause Analysis  
+- Incorrect **include paths** for module directories during compilation.  
+- Missing **macro definition** (`-DPRE_SYNTH_SIM`) while invoking iverilog.  
+- Verilog source files were spread across multiple folders (`src/module`, `src/include`), requiring explicit linking.  
+- I had initially assumed iverilog would automatically detect all submodules, which is incorrect — explicit inclusion is mandatory.
+
+### 🔧 Corrective Steps Implemented
+```bash
+# Step 1: Identified all submodule file paths
+find src/module -type f -name "*.v"
+
+# Step 2: Compiled with explicit include and macro
+iverilog -g2012 -o output/pre_synth_sim/pre_synth_sim.out -DPRE_SYNTH_SIM \
+  -I src/module \
+  src/module/testbench.v \
+  src/module/vsdbabysoc.v \
+  src/module/avsddac.v \
+  src/module/avsdpll.v
+
+# Step 3: Verified simulation output and waveform dump
+vvp output/pre_synth_sim/pre_synth_sim.out
+gtkwave output/pre_synth_sim/pre_synth_sim.vcd &
+
+
+---
+
+## 🧠 Learnings
+
+```markdown
+1. **Hierarchical Design Understanding**
+   - Gained hands-on experience with how Verilog interprets hierarchical module structures.
+   - Realized that top-level modules must explicitly reference their submodules during compilation.
+   - This deepened my understanding of how SoC designs integrate multiple IP blocks in a single environment.
+
+2. **EDA Toolchain Familiarity**
+   - Learned practical usage of **Icarus Verilog** for simulation and **GTKWave** for waveform visualization.
+   - Understood how compilation, simulation, and waveform dumping form a continuous debug loop.
+   - Discovered the significance of the `-I` flag for include paths and the `-D` macro for pre-synthesis configurations.
+
+3. **Systematic Debugging Approach**
+   - Adopted a modular debugging workflow: checking directory paths → verifying includes → compiling each module separately.
+   - Each iteration refined my skill in reading compiler logs and tracing missing dependencies.
+   - This iterative debugging built patience and confidence while working with open-source EDA tools.
+
+4. **Waveform Analysis Confidence**
+   - Interpreted signal transitions and timing relations in **GTKWave** to validate reset, clock, and dataflow correctness.
+   - Learned to identify expected vs anomalous behavior visually through simulation waveforms.
+   - Developed the habit of documenting every observation for traceability and report inclusion.
+
+5. **Linux Command Proficiency**
+   - Enhanced comfort with Linux shell operations while handling file paths, directory naming, and permission issues.
+   - Realized how small syntax details (like spaces or case sensitivity) can cause major workflow disruptions.
+   - Gained real-world experience managing open-source projects in a Linux-based simulation environment.
+
+6. **Growth Mindset and Persistence**
+   - Encountered multiple setbacks during simulation but persisted through trial and error.
+   - Each issue reinforced core engineering traits — curiosity, systematic thinking, and documentation discipline.
+   - Learned that clarity in documentation and reproducibility are equally as valuable as technical correctness.
+
+---
 
