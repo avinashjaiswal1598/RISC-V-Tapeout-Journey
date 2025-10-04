@@ -462,7 +462,6 @@ iverilog -g2012 -o output/pre_synth_sim/pre_synth_sim.out -DPRE_SYNTH_SIM \
 vvp output/pre_synth_sim/pre_synth_sim.out
 gtkwave output/pre_synth_sim/pre_synth_sim.vcd 
 ```
-<img width="844" height="512" alt="Screenshot from 2025-10-04 21-03-21" src="https://github.com/user-attachments/assets/4958f33a-173f-444b-b756-028fa8cd5dc7" />
 
 ---
 
