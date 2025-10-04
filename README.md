@@ -332,6 +332,8 @@ Follow [OpenLANE Docs](https://openlane.readthedocs.io/) for detailed workflows.
 
 ---
 # 🧠 Week 2 – BabySoC Fundamentals & Functional Modelling  
+<img width="833" height="691" alt="image" src="https://github.com/user-attachments/assets/53998ea7-60c3-4924-a86c-ddc197f13d82" />
+
 
 <details>
 <summary>📘 Click to expand summary</summary>
@@ -397,6 +399,7 @@ It ensures that module interconnections and signal propagation behave as expecte
 git clone https://github.com/hemanthkumardm/SFAL-VSD-SoC-Journey.git
 cd "SFAL-VSD-SoC-Journey/12. VSDBabySoC Project"
 
+
 # 2️⃣ Compile the BabySoC modules
 iverilog -g2012 -o output/pre_synth_sim/pre_synth_sim.out -DPRE_SYNTH_SIM \\
   -I src/module src/module/testbench.v src/module/vsdbabysoc.v src/module/avsddac.v src/module/avsdpll.v
@@ -407,13 +410,27 @@ vvp output/pre_synth_sim/pre_synth_sim.out
 # 4️⃣ View waveforms
 gtkwave output/pre_synth_sim/pre_synth_sim.vcd &
 ```
+## 🧩 Pre-Synthesis Simulation Waveform Analysis
 
-| Observation            | Description                                                                                                                                                |
-| :--------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Reset Operation**    | During reset, all internal registers and output signals return to known states. The waveform showed a clean reset pulse, confirming proper initialization. |
-| **Clock Behavior**     | Verified 50% duty cycle and stable frequency across simulation time.                                                                                       |
-| **Data Flow**          | Observed data propagation from CPU to DAC modules and feedback through PLL signals.                                                                        |
-| **Module Interaction** | Inter-module signals showed correct handshaking behavior between `vsdbabysoc`, `avsddac`, and `avsdpll`.                                                   |
+The pre-synthesis simulation of **VSDBabySoC** was analyzed using GTKWave. The main signals observed were:
+
+- **`clk`** – System clock signal. Provides timing reference for all synchronous modules.  
+- **`reset`** – Active high reset. Initially asserted to initialize the system and de-asserted after 120 ns to start normal operation.  
+- **`vco_in`** – Input to the VCO block of the DAC/PLL. Toggles according to the VCO frequency after reset.  
+- **`out`** – DAC output signal. Starts producing values after reset de-assertion, representing the digital-to-analog conversion.  
+- **`ENb_VCO`** – VCO enable signal. Kept high (`1`) during simulation to ensure continuous VCO operation.
+
+**Observations:**
+
+- `clk` and `vco_in` toggle periodically after reset de-assertion.  
+- `ENb_VCO = 1` ensures the VCO remains active.  
+- DAC output (`out`) shows expected waveform after reset, confirming correct operation of the SoC modules.  
+
+**GTKWave Screenshot:**  
+
+![GTKWave Pre-Synthesis Simulation](<img width="1280" height="800" alt="Screenshot from 2025-10-04 19-50-02" src="https://github.com/user-attachments/assets/ff40338a-db8f-4519-8f53-2672f658a081" />
+)
+                                                 |
 
 ---
 
@@ -435,17 +452,14 @@ The compiler failed to recognize interlinked modules (`avsddac`, `avsdpll`, and 
 find src/module -type f -name "*.v"
 
 # Step 2: Compiled with explicit include and macro
-```
 iverilog -g2012 -o output/pre_synth_sim/pre_synth_sim.out -DPRE_SYNTH_SIM \
   -I src/module \
   src/module/testbench.v \
   src/module/vsdbabysoc.v \
   src/module/avsddac.v \
   src/module/avsdpll.v
-```
 
 # Step 3: Verified simulation output and waveform dump
-```
 vvp output/pre_synth_sim/pre_synth_sim.out
 gtkwave output/pre_synth_sim/pre_synth_sim.vcd &
 ```
@@ -454,7 +468,6 @@ gtkwave output/pre_synth_sim/pre_synth_sim.vcd &
 
 ## 🧠 Learnings
 
-markdown
 1. **Hierarchical Design Understanding**
    - Gained hands-on experience with how Verilog interprets hierarchical module structures.
    - Realized that top-level modules must explicitly reference their submodules during compilation.
