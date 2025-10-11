@@ -33,8 +33,8 @@
  make post_synth_sim
 ```
 
-📸 *<img width="1153" height="385" alt="Screenshot from 2025-10-11 14-36-43" src="https://github.com/user-attachments/assets/9d04d596-c226-44e5-87bc-bcdafa326cec" />
-*
+<img width="1153" height="385" alt="Screenshot from 2025-10-11 14-36-43" src="https://github.com/user-attachments/assets/9d04d596-c226-44e5-87bc-bcdafa326cec" />
+
 
 ### 🧩 Step 3: View and Compare Waveforms
 
@@ -44,8 +44,8 @@ Open GTKWave to view post-synthesis output and compare it with Week 2 functional
  gtkwave output/post_synth_sim/post_synth_sim.vcd
 ```
 
-📸 *<img width="1280" height="800" alt="Screenshot from 2025-10-11 14-46-18" src="https://github.com/user-attachments/assets/9799a4a8-b1a2-4f28-927b-4c4aa38338f0" />
-*
+<img width="1280" height="800" alt="Screenshot from 2025-10-11 14-46-18" src="https://github.com/user-attachments/assets/9799a4a8-b1a2-4f28-927b-4c4aa38338f0" />
+
 
 # Yosys report
 <img width="959" height="350" alt="Screenshot from 2025-10-11 14-25-40" src="https://github.com/user-attachments/assets/ee5c15f2-0590-4ddd-a630-0bb370cffdf2" />
