@@ -190,4 +190,5 @@ report_timing -delay_type max -sort_by slack -max_paths 3
 
 ---
 
-> 🏁 **Final Verdict:** Week 3 successfully demonstrates complete digital design verification — from functional modeling (Week 2) to synthesis, GLS validation, and introductory timing analysis using OpenSTA. The project is now ready for Week 4's PnR exploration.
+> 🏁 **Final Verdict:** Week 3 successfully demonstrates complete digital design verification — from functional modeling (Week 2) through synthesis, Gate-Level Simulation (GLS), and initial Static Timing Analysis (STA). The results confirm functional equivalence between RTL and synthesized netlist and provide first-hand understanding of timing paths and slack analysis using OpenSTA.
+The project is now well-prepared for ### Week 4: Physical Design and Timing Closure.
