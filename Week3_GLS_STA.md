@@ -136,26 +136,40 @@ Create a file named `run_sta.tcl`:
 ```
 
 
-### 🧮 Step 2: Perform Timing Analysis
-Add these commands to the same script:
+### 🧾 Step 2: Output of the OPenSTA tool
 
-```tcl
-report_checks -path_delay min_max -fields {slew capacitance delay slack}
-report_tns
-report_wns
 ```
-Run it using:
-```bash
-sta run_sta.tcl | tee opensta_report.log
+Warning: ./lib/avsddac.lib line 1, library avsddac already exists.
+Startpoint: _9532_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _10034_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock clk (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ _9532_/CLK (sky130_fd_sc_hd__dfxtp_1)
+   4.40    4.40 ^ _9532_/Q (sky130_fd_sc_hd__dfxtp_1)
+   5.06    9.47 v _8103_/Y (sky130_fd_sc_hd__clkinv_1)
+   0.54   10.01 ^ _8106_/Y (sky130_fd_sc_hd__o211ai_1)
+   0.00   10.01 ^ _10034_/D (sky130_fd_sc_hd__dfxtp_1)
+          10.01   data arrival time
+
+  11.00   11.00   clock clk (rise edge)
+   0.00   11.00   clock network delay (ideal)
+   0.00   11.00   clock reconvergence pessimism
+          11.00 ^ _10034_/CLK (sky130_fd_sc_hd__dfxtp_1)
+  -0.13   10.87   library setup time
+          10.87   data required time
+---------------------------------------------------------
+          10.87   data required time
+         -10.01   data arrival time
+---------------------------------------------------------
+           0.86   slack (MET)
+
 ```
 
-
-
-### 🧾 Step 3: Generate Timing Graphs
-To visualize setup and hold paths:
-```tcl
-report_timing -delay_type max -sort_by slack -max_paths 3
-```
 
 
 
