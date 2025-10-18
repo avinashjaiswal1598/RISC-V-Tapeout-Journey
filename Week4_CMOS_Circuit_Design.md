@@ -3,8 +3,7 @@
 > **Repository:** [RISC-V-Tapeout-Journey](https://github.com/avinashjaiswal1598/RISC-V-Tapeout-Journey)  
 > **Platform:** [VSDIAT](https://vsdiat.com/)  
 > **Workshop Reference:** [Sky130 CMOS Circuit Design Workshop by Kunal Ghosh](https://github.com/kunalg123/sky130CircuitDesignWorkshop/)  
-> **Author:** Avinash Jaiswal  
-> **Date:** October 2025  
+> **Author:** Avinash Jaiswal   
 
 ---
 
@@ -16,7 +15,7 @@
 5. [Day 4 – CMOS Noise Margin & Robustness Evaluation](#day-4--cmos-noise-margin--robustness-evaluation)
 6. [Day 5 – CMOS Power Supply & Device Variation Robustness](#day-5--cmos-power-supply--device-variation-robustness)
 7. [Summary Table](#summary-table)
-8. [🔍 Observations and Analysis](#observations-and-analysis)
+8. [Observations and Analysis](#observations-and-analysis)
 9. [Conclusion](#conclusion)
 10. [References](#references)
 
@@ -40,8 +39,45 @@ Simulate NMOS drain current (Id) versus drain voltage (Vds) for various gate vol
 - Sweep Vds from 0 V to 1.8 V for multiple Vgs values.  
 - Record Id–Vds curves and identify operation regions.
 
-📸 **Screenshot Placeholder:**  
-`![Day1 - Id-Vds Simulation](images/week4/day1_idvds.png)`
+```spicedeck
+
+*Model Description
+.param temp=27
+
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+
+*Netlist Description
+
+
+
+XM1 Vdd n1 0 0 sky130_fd_pr__nfet_01v8 w=5 l=2
+
+R1 n1 in 55
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+.dc Vdd 0 1.8 0.1 Vin 0 1.8 0.2
+
+.control
+
+run
+display
+setplot dc1
+.endc
+
+.end
+```  
+
+
+<img width="1280" height="800" alt="IdVsVds" src="https://github.com/user-attachments/assets/d18c8f33-74e7-4938-9991-1635d6e92294" />
+
 
 **Observation:**  
 - Linear current increase at low Vds confirms ohmic region.  
@@ -58,14 +94,48 @@ Perform CMOS inverter **Voltage Transfer Characteristic (VTC)** simulation.
 
 **Procedure:**  
 - Sweep Vgs for NMOS and analyze Id variation.  
-- Identify threshold point (Vt ≈ 0.42 V).  
+- Identify threshold point (Vt ≈ 0.76 V).  
 - Create CMOS inverter using Sky130 devices and perform DC analysis.
 
-📸 **Screenshot Placeholder:**  
-`![Day2 - Threshold Extraction & VTC](images/week4/day2_vtc.png)`
+```spicedeck
+*Model Description
+.param temp=27
+
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+
+*Netlist Description
+
+XM1 Vdd n1 0 0 sky130_fd_pr__nfet_01v8 w=0.39 l=0.15
+
+R1 n1 in 55
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+.dc Vin 0 1.8 0.1
+
+.control
+
+run
+display
+setplot dc1
+.endc
+
+.end
+
+```
+<img width="1123" height="639" alt="Screenshot from 2025-10-19 00-40-23" src="https://github.com/user-attachments/assets/b8463767-2fc7-49b2-b2c5-2380a9600106" />
+
+
 
 **Observation:**  
-- Threshold voltage extracted ≈ 0.42 V.  
+- Threshold voltage extracted ≈ 0.76 V.  
 - Velocity saturation evident as current levels off at high Vds.  
 - VTC curve transition near VDD/2 shows proper device sizing and switching behavior.
 
@@ -81,20 +151,103 @@ Perform transient simulation to determine inverter switching threshold and propa
 - Measure rise (tPLH) and fall (tPHL) delays.  
 - Identify switching point (Vm) from transient waveform.
 
-📸 **Screenshot Placeholder:**  
-`![Day3 - Transient Response](images/week4/day3_transient.png)`
+### CMOS VTC
+
+```spicedeck
+*Model Description
+.param temp=27
+
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+
+*Netlist Description
+
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=0.84 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+
+.dc Vin 0 1.8 0.01
+
+.control
+run
+setplot dc1
+display
+.endc
+
+.end
+```
+
+<img width="1213" height="615" alt="cmos_vtc" src="https://github.com/user-attachments/assets/3686c5d0-544b-483e-808b-557bed2ec2e3" />
+
+### Switching Threshold Voltage STV
+for stv zoom in the area where Vin = Vout.
+
+<img width="1213" height="615" alt="cmos_vtc_stv" src="https://github.com/user-attachments/assets/a897e883-e541-4dca-8146-6221a2284a9c" />
+
+### CMOS Transiant Analysis 
+
+```spicedeck
+*Model Description
+.param temp=27
+
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+
+*Netlist Description
+
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=0.84 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 PULSE(0V 1.8V 0 0.1ns 0.1ns 2ns 4ns)
+
+*simulation commands
+
+.tran 1n 10n
+
+.control
+run
+.endc
+
+.end
+```
+
+<img width="1213" height="615" alt="cmos_tran_outvsin" src="https://github.com/user-attachments/assets/65f7f96d-1ec3-4201-856a-9b778714e6b5" />
+
+### Rise delay & Fall delay
+
+<img width="1213" height="788" alt="cmos_delay" src="https://github.com/user-attachments/assets/74f85314-ff7a-4118-be60-134ab6cc58c4" />
+
 
 **Result Summary:**
 
 | Parameter | Value (ns) |
 |------------|------------|
-| Rise Delay | 3.42 |
-| Fall Delay | 2.97 |
-| Switching Vm | 0.82 V |
+| Rise Delay | 2.48-2.15=0.33 |
+| Fall Delay | 4.34-4.05=0.29 |
+| Switching Threshold Voltage Vm | 0.876 V |
 
 **Observation:**  
 - Rise delay > fall delay due to lower PMOS mobility.  
-- Switching point (~0.82 V) aligns with static VTC results.  
+- Switching point (~0.876 V) aligns with static VTC results.  
 - Confirms correct timing performance for Sky130 inverter.
 
 ---
@@ -108,19 +261,57 @@ Determine logic levels (VOH, VOL, VIH, VIL) and compute noise margins (NMH, NML)
 - Extract VOH, VOL, VIH, VIL from inverter VTC.  
 - Compute NMH = VOH – VIH and NML = VIL – VOL.
 
-📸 **Screenshot Placeholder:**  
-`![Day4 - Noise Margin Plot](images/week4/day4_noise_margin.png)`
+### Noise Margin
+
+```spicedeck
+
+*Model Description
+.param temp=27
+
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+
+*Netlist Description
+
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=1 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+
+.dc Vin 0 1.8 0.01
+
+.control
+run
+setplot dc1
+display
+.endc
+
+.end
+```
+
+<img width="1218" height="617" alt="inv_noisemargin" src="https://github.com/user-attachments/assets/4390877a-c0c4-4542-9ebe-0363d7e04ad7" />
 
 **Result Summary:**
 
 | Parameter | Value (V) |
 |------------|-----------|
-| VOH | 1.80 |
-| VOL | 0.02 |
-| VIH | 1.00 |
-| VIL | 0.75 |
-| NMH | 0.80 |
-| NML | 0.73 |
+| VOH | 1.739 |
+| VOL | 0.066 |
+| VIH | 1.007 |
+| VIL | 0.749 |
+| NMH | 0.732 |
+| NML | 0.683 |
 
 **Observation:**  
 - High NMH and NML indicate strong noise immunity.  
@@ -137,18 +328,65 @@ Study inverter **VTC** and **gain** variation under different supply voltages (V
 - Simulate inverter for VDD = 1.8 V, 1.6 V, 1.2 V, 1.0 V, 0.8 V.  
 - Record VTC and gain variation.
 
-📸 **Screenshot Placeholder:**  
-`![Day5 - VTC Variation](images/week4/day5_vtc_variation.png)`
+### Supply Variation
+
+```spicedeck
+
+*Model Description
+.param temp=27
+
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+
+*Netlist Description
+
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=1 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+.control
+
+let powersupply = 1.8
+alter Vdd = powersupply
+        let voltagesupplyvariation = 0
+        dowhile voltagesupplyvariation < 6
+        dc Vin 0 1.8 0.01
+        let powersupply = powersupply - 0.2
+        alter Vdd = powersupply
+        let voltagesupplyvariation = voltagesupplyvariation + 1
+      end
+
+plot dc1.out vs in dc2.out vs in dc3.out vs in dc4.out vs in dc5.out vs in dc6.out vs in xlabel "input voltage(V)" ylabel "output voltage(V)" title "Inveter dc characteristics as a function of supply voltage"
+
+.endc
+
+.end
+```
+
+<img width="1218" height="617" alt="supply_voltage_vtc" src="https://github.com/user-attachments/assets/ad8533bf-239d-439c-bd18-8b6bd6d39fbc" />
+
+### Supply Voltage Gain
+
+<img width="1220" height="685" alt="supply_voltage_gain" src="https://github.com/user-attachments/assets/40f26d0f-319f-4754-a59e-4c92fec99b9d" />
+
 
 **Result Summary:**
 
-| VDD (V) | Vm (V) | Gain | Observation |
-|----------|--------|------|--------------|
-| 1.8 | 0.82 | 15.8 | Stable switching |
-| 1.6 | 0.73 | 17.2 | Slight gain increase |
-| 1.2 | 0.56 | 19.0 | Steeper transition |
-| 1.0 | 0.45 | 20.2 | Peak gain |
-| 0.8 | 0.37 | 9.8 | Gain reduced |
+| VDD | Gain |
+|------|------|
+| 1.8 | 7.03 |
+| 1.6 | 8.45 |
+| 1.2 | 10.06 |
+| 1.0 | 10.12 |
+| 0.8 | 9.67 | 
 
 **Observation:**  
 - Gain increases as VDD drops to 1.0 V, but falls at 0.8 V due to weak current drive.  
@@ -160,13 +398,13 @@ Study inverter **VTC** and **gain** variation under different supply voltages (V
 
 | Metric | Typical Value | Insight |
 |---------|----------------|---------|
-| NMOS Vt | 0.42 V | Extracted from Id–Vgs curve |
-| Switching Vm | 0.82 V | Equal Vout = Vin |
-| Rise Delay | 3.42 ns | Output low → high |
-| Fall Delay | 2.97 ns | Output high → low |
-| NMH | 0.80 V | High-level noise margin |
-| NML | 0.73 V | Low-level noise margin |
-| Peak Gain | 20.2 | At 1.0 V supply |
+| NMOS Vt | 0.76 V | Extracted from Id–Vgs curve |
+| Switching Vm | 0.876 V | Equal Vout = Vin |
+| Rise Delay | 0.33 | Output low → high |
+| Fall Delay | 0.29 ns | Output high → low |
+| NMH | 0.732 V | High-level noise margin |
+| NML | 0.683 V | Low-level noise margin |
+| Peak Gain | 10.12 | At 1.0 V supply |
 
 ---
 
@@ -203,4 +441,4 @@ This week’s work reinforced concepts of **delay, noise margin, and voltage var
 
 ⭐ **Author:** *Avinash Jaiswal*  
 🎓 *VSDIAT – Week 4 CMOS Circuit Design Documentation*  
-📅 *October 2025*
+
