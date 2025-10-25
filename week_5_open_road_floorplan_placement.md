@@ -14,8 +14,8 @@ This marks the transition from transistor-level simulation (Week 4) to the physi
 - [🧭 Objective](#-objective)
 - [🔍 Why This Task Matters](#-why-this-task-matters)
 - [📚 References](#-references)
-- [⚙️ Task Components](#%EF%B8%8F-task-components)
-- [🖼️ Outputs](#%EF%B8%8F-outputs)
+- [⚙️ Task Components](#-%EF%B8%8F-task-components)
+- [🖼️ Outputs](#-%EF%B8%8F-outputs)
 - [🧰 Troubleshooting & Learnings](#-troubleshooting--learnings)
 - [🧠 Summary](#-summary)
 - [🚀 Next Steps](#-next-steps)
@@ -51,13 +51,14 @@ This marks the transition from transistor-level simulation (Week 4) to the physi
 # Install all prerequisites
  sudo ./setup.sh
 
-<img width="800" height="231" alt="2kaylayout" src="https://github.com/user-attachments/assets/51875d71-3741-46ff-b0d0-de20a2eb0846" />
 
 # Verify installation
  ./openroad -version
 ```
 
 ✅ **Expected Result:** OpenROAD version displayed successfully.  
+
+<img width="800" height="231" alt="2kaylayout" src="https://github.com/user-attachments/assets/0e875de7-3897-4b2e-920d-8f756867fb4f" />
 
 <img width="600" height="672" alt="openroad installation" src="https://github.com/user-attachments/assets/bb182dfd-451d-46c6-9064-a3cfdeaa3f55" />
 
