@@ -1,7 +1,6 @@
 # 🌟 Week 5 – OpenROAD Flow Setup & Floorplan + Placement  
 **Repository:** [RISC-V-Tapeout-Journey](https://github.com/avinashjaiswal1598/RISC-V-Tapeout-Journey)  
-**Date:** _<enter date of execution>_  
-**Student:** Avinash Jaiswal  
+**Author:** Avinash Jaiswal  
 
 ---
 
@@ -36,7 +35,6 @@ This marks the transition from transistor-level simulation (Week 4) to the physi
 - [OpenROAD Flow Scripts (Official Repo)](https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts)  
 - [VSD-HDP Reference (Day 14)](https://github.com/spatha0011/spatha_vsd-hdp/blob/main/Day14/README.md)  
 - [Kunal Ghosh – VSD GitHub](https://github.com/kunalg123)  
-- [MihaiHMO VSD-HDP](https://github.com/MihaiHMO/VSDhdp)  
 
 ---
 
@@ -53,13 +51,15 @@ This marks the transition from transistor-level simulation (Week 4) to the physi
 # Install all prerequisites
  sudo ./setup.sh
 
+<img width="800" height="231" alt="2kaylayout" src="https://github.com/user-attachments/assets/51875d71-3741-46ff-b0d0-de20a2eb0846" />
+
 # Verify installation
  ./openroad -version
 ```
 
 ✅ **Expected Result:** OpenROAD version displayed successfully.  
-📸 *Screenshot:* Terminal showing username and installation success.
-</details>
+
+<img width="600" height="672" alt="openroad installation" src="https://github.com/user-attachments/assets/bb182dfd-451d-46c6-9064-a3cfdeaa3f55" />
 
 ---
 
@@ -67,7 +67,7 @@ This marks the transition from transistor-level simulation (Week 4) to the physi
 <summary><strong>2️⃣ Execute Floorplan + Placement (Only These Stages)</strong></summary>
 
 ```bash
- ./flow.tcl -design <your_design_name> -stage floorplan,placement
+ 
 ```
 
 ✅ **Verify:**  
@@ -75,7 +75,7 @@ This marks the transition from transistor-level simulation (Week 4) to the physi
 - Standard cells placed successfully.  
 - Logs created under `logs/` directory.  
 
-📸 *Screenshots Required:*  
+ 
 - Terminal logs for floorplan & placement completion.  
 - Floorplan and placement layout images.  
 </details>
