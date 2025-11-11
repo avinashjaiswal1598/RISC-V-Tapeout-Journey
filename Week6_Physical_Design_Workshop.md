@@ -1,4 +1,4 @@
-# 🧩 Week 6 – Physical Design Workshop
+# 🧩 Week 6 – Physical Design 
 
 Welcome to **Week 6** of the RISC-V Tapeout Journey!  
 This week focuses on **hands-on Physical Design** — where your RTL finally starts transforming into a *real silicon layout*.  
@@ -51,8 +51,8 @@ By completing this workshop, you will:
 3. Enable **VT-x/AMD-V** virtualization in BIOS.  
 4. Start the VM and open the terminal.
 
-📸 **Screenshot Placeholder**  
-`![VDI Setup Screenshot](path_to_image)`  
+<img width="798" height="378" alt="Ubuntu Desktop" src="https://github.com/user-attachments/assets/affe350d-bb7a-42a1-8dc1-15b6bd00c825" />
+  
 *Show your Ubuntu desktop and terminal with your username visible.*
 
 ---
@@ -80,14 +80,28 @@ openroad -version
 magic -version
 echo $PDK_ROOT
 ```
+<img width="798" height="598" alt="Screenshot from 2025-11-10 17-39-42" src="https://github.com/user-attachments/assets/15320ec4-81ad-47a0-8eda-93a44dcbb476" />
 
-📸 **Screenshot Placeholder**  
-`![Tool Verification](path_to_image)`  
 *Show terminal outputs verifying tool versions.*
+
+### Install OpenLane by gitclone the official openlane github link
+
+<img width="798" height="545" alt="make test pass" src="https://github.com/user-attachments/assets/5ee76edf-7e06-40ae-a790-a0eefd976594" />
+
+*OpenLane make test pass for simple design SPM*
+
+<img width="798" height="527" alt="openlane tree" src="https://github.com/user-attachments/assets/b635490b-69ed-47c9-8cea-ae700ba8ba0a" />
+
+*OpenLane Tree*
+
 
 **Concept:**  
 This step ensures that the **toolchain and PDK (Sky130)** are accessible, forming the foundation for all design stages.
 
+<img width="737" height="486" alt="config tcl" src="https://github.com/user-attachments/assets/789b77e0-e82f-4fd2-8372-405f79da7f75" />
+
+  *config.tcl*
+  
 ---
 
 ### 🔧 Lab 2: Synthesis Overview
@@ -102,9 +116,15 @@ This stage optimizes the design for area, timing, and power.
 2. Use a synthesis tool (e.g., Yosys) to generate a gate-level netlist.  
 3. Verify the timing report.
 
-📸 **Screenshot Placeholder**  
-`![Synthesis Output](path_to_image)`  
-*Display Yosys terminal output or generated netlist file.*
+### Preparying Design picorv32a
+
+<img width="798" height="317" alt="prep design picorv32a" src="https://github.com/user-attachments/assets/9ed41fa3-6bdf-4199-bafc-ff5ce8701914" />
+   
+*Preparying Design*
+
+<img width="798" height="353" alt="run_synthesis" src="https://github.com/user-attachments/assets/6e8d258c-4532-4c54-a1fd-68a9ce23e4f0" />
+
+*synthesis is processing*
 
 **Observation:**  
 The netlist forms the bridge between functional (RTL) and physical (layout) domains.
@@ -123,11 +143,20 @@ Proper floorplanning helps reduce routing congestion and timing violations later
 2. Define IO pin positions.  
 3. Create **VDD/VSS power rings**.
 
-📸 **Screenshot Placeholder**  
-`![Floorplan View](path_to_image)`  
-*Show OpenROAD or Magic GUI with visible core boundary and power rails.*
+<img width="798" height="446" alt="run_floorplan" src="https://github.com/user-attachments/assets/f1792a6f-de3b-4bb9-bc2a-13cef0556db4" />
+
+  
+*Floorplan processing*
 
 **Observation:**  
+
+<img width="1280" height="800" alt="flop ratio" src="https://github.com/user-attachments/assets/343f1073-ac6f-42ed-a6ee-327e58085f2c" />
+
+*Flop ratio*
+
+<img width="918" height="267" alt="floorplan_result" src="https://github.com/user-attachments/assets/bf46ad59-3c50-453e-83cc-82e70969339b" />
+
+
 A well-structured floorplan ensures balanced power distribution and smooth routing.
 
 ---
@@ -144,9 +173,10 @@ This step prepares the design for clock tree synthesis.
 2. Perform detailed placement to fix overlaps.  
 3. Save placement DEF and layout.
 
-📸 **Screenshot Placeholder**  
-`![Placement Results](path_to_image)`  
-*Show placed standard cells layout.*
+<img width="798" height="272" alt="placement analysis" src="https://github.com/user-attachments/assets/8ab35a96-aaab-4f27-aa3a-4ed21cc51a9c" />
+
+<img width="1032" height="476" alt="placement_log" src="https://github.com/user-attachments/assets/30692d1d-dbce-464c-8288-9091dda09abb" />
+
 
 **Observation:**  
 Placement quality directly influences routing complexity and chip performance.
