@@ -45,6 +45,11 @@ Document and understand the ASIC design flow for the `picorv32a` RISC-V core, us
 - Sky130 PDK installed and environment variables set.
 - RTL design `picorv32a.v` placed in `designs/picorv32a/src/`.
 
+<img width="1279" height="378" alt="Ubuntu Desktop" src="https://github.com/user-attachments/assets/c2bd28bd-fe36-4bf7-b28d-24139ec22597" />
+
+<img width="1215" height="545" alt="make test pass" src="https://github.com/user-attachments/assets/9a12680e-775e-43b2-bb23-6ea51db7a053" />
+
+
 **Environment Variables:**
 ```bash
 export PDK_ROOT=/home/avinash/.ciel/ciel/sky130/versions/0fe599b2afb6708d281543108caf8310912f54af
@@ -54,6 +59,8 @@ export DESIGN_DIR=/openlane/designs/picorv32a
 export OPENLANE_ROOT=/openlane
 source ~/.bashrc
 ```
+
+<img width="1199" height="527" alt="openlane tree" src="https://github.com/user-attachments/assets/8500611d-0f1a-4faa-8c75-3d018df4e426" />
 
 **Lab Setup Steps:**
 1. Launch OpenLane container 🐳.
@@ -81,8 +88,12 @@ The ASIC flow is executed using OpenLane automated scripts. Below is the structu
 | 1 | Synthesis | [1-synthesis.log](logs/synthesis/1-synthesis.log) |
 | 2 | Single-Corner STA | [2-sta.log](logs/synthesis/2-sta.log) |
 
-**Screenshot Placeholder:**
-`![Synthesis Step](screenshots/synthesis_step2.png)`
+<img width="953" height="317" alt="prep design picorv32a" src="https://github.com/user-attachments/assets/de22a527-5c6a-4f3f-b246-effa86aaea15" />
+
+
+<img width="1100" height="87" alt="synthesys" src="https://github.com/user-attachments/assets/629bad5f-2afb-4cad-af07-e26fd1fc4de6" />
+
+
 
 ### 📐 4.2 Floorplanning (Steps 3–6)
 **Purpose:** Define chip layout area, IO placement, and power grid planning.
@@ -95,8 +106,8 @@ The ASIC flow is executed using OpenLane automated scripts. Below is the structu
 | 5 | Tap / Decap insertion | [5-tap.log](logs/floorplan/5-tap.log) |
 | 6 | Power Distribution Network (PDN) | [6-pdn.log](logs/floorplan/6-pdn.log) |
 
-**Screenshot Placeholder:**
-`![Floorplan Step](screenshots/floorplan_step6.png)`
+<img width="1013" height="225" alt="floorplan" src="https://github.com/user-attachments/assets/7e9a5a9d-834b-425a-b833-86ff99ca4893" />
+
 
 ### 📦 4.3 Placement (Steps 7–11)
 **Purpose:** Place standard cells and macros while maintaining timing and routability.
@@ -110,8 +121,8 @@ The ASIC flow is executed using OpenLane automated scripts. Below is the structu
 | 10 | Detailed Placement | [10-detailed.log](logs/placement/10-detailed.log) |
 | 11 | STA after DPL | [11-dpl_sta.log](logs/placement/11-dpl_sta.log) |
 
-**Screenshot Placeholder:**
-`![Placement Step](screenshots/placement_step11.png)`
+<img width="1132" height="264" alt="placement" src="https://github.com/user-attachments/assets/6ac1a8bb-2e6f-498b-9b57-8aba4ab46a2b" />
+
 
 ### ⏱ 4.4 Clock Tree Synthesis (CTS) (Steps 12–14)
 **Purpose:** Generate balanced clock tree to minimize skew and insertion delay.
@@ -123,8 +134,8 @@ The ASIC flow is executed using OpenLane automated scripts. Below is the structu
 | 13 | STA after CTS | [13-cts_sta.log](logs/cts/13-cts_sta.log) |
 | 14 | Placement Resizer Timing Optimization | [14-resizer.log](logs/cts/14-resizer.log) |
 
-**Screenshot Placeholder:**
-`![CTS Step](screenshots/cts_step14.png)`
+<img width="1096" height="163" alt="CTS" src="https://github.com/user-attachments/assets/466526e5-58ca-45b1-bcfa-ce8a9015a725" />
+
 
 ### 🔌 4.5 Routing (Steps 15–28)
 **Purpose:** Connect all placed cells and macros electrically while satisfying design rules and timing constraints.
@@ -140,8 +151,8 @@ The ASIC flow is executed using OpenLane automated scripts. Below is the structu
 | 27 | Detailed Routing | [27-detailed.log](logs/routing/27-detailed.log) |
 | 28 | Wire Length Check | [28-wire_lengths.log](logs/routing/28-wire_lengths.log) |
 
-**Screenshot Placeholder:**
-`![Routing Step](screenshots/routing_step28.png)`
+<img width="1203" height="651" alt="Routing" src="https://github.com/user-attachments/assets/9acd0d38-d76f-4916-b6f1-24a093a0f5e3" />
+
 
 ### ✅ 4.6 Signoff / Verification (Steps 29–46)
 **Purpose:** Verify design correctness, DRC/LVS compliance, parasitic extraction, IR drop, and generate final GDSII.
@@ -158,6 +169,65 @@ The ASIC flow is executed using OpenLane automated scripts. Below is the structu
 | 44 | Magic DRC | [44-drc.log](logs/signoff/44-drc.log) |
 | 46 | ERC | [46-erc_screen.log](logs/signoff/46-erc_screen.log) |
 
-**Screenshot Placeholder:**
-`![Signoff Step](screenshots/signoff_step46.png)`
+<img width="1100" height="87" alt="synthesys" src="https://github.com/user-attachments/assets/32a82d6e-75ba-4999-aa75-a26aff3eca88" />
 
+## 📊 5. Summary & Metrics
+
+
+This section provides a concise summary of the design flow outcomes and key metrics.
+
+
+- **Design Name:** picorv32a
+- **PDK:** Sky130A
+- **Standard Cell Library:** sky130_fd_sc_hd
+- **Total Runtime:** [Insert runtime from OpenLane logs]
+- **Core Utilization:** [FP_CORE_UTIL value]
+- **Max Fanout:** [Max fanout reported in STA]
+- **Timing Violations:** [Number of setup/hold violations from STA]
+- **DRC Violations:** [Number of DRC violations from Magic/Signoff]
+- **GDSII Size:** [Size in KB/MB]
+- **IR Drop Analysis:** [IR drop summary if available]
+
+<img width="1280" height="800" alt="Screenshot from 2025-11-11 21-04-12" src="https://github.com/user-attachments/assets/30cf1f50-b177-4692-87e0-477cbd373435" />
+
+
+---
+
+
+## 💡 6. Reflections & Learnings
+
+
+- Learned how OpenLane automates the ASIC design flow from RTL to GDSII.
+- Observed the impact of floorplanning, placement, and CTS on timing.
+- Understood the importance of routing, detailed routing, and design rules compliance.
+- Learned to analyze log files for synthesis, STA, placement, routing, and signoff.
+- Gained experience in preparing professional GitHub documentation with screenshots and logs.
+
+
+---
+
+
+## 📖 7. References & Resources
+
+
+1. OpenLane Documentation: [https://openlane.readthedocs.io/](https://openlane.readthedocs.io/)
+2. SkyWater 130nm PDK: [https://github.com/google/skywater-pdk](https://github.com/google/skywater-pdk)
+3. RISC-V PicoRV32 Core: [https://github.com/cliffordwolf/picorv32](https://github.com/cliffordwolf/picorv32)
+4. Reference GitHub (NASSCOM VSD): [https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd)
+5. OpenROAD Tools Documentation: [https://openroad.readthedocs.io/](https://openroad.readthedocs.io/)
+
+
+---
+
+
+## 📝 8. Deliverables Summary
+
+
+- RTL source code: `designs/picorv32a/src/picorv32a.v`
+- OpenLane configuration: `designs/picorv32a/config.json`
+- All log files for each step stored in `logs/` folder.
+- Screenshots for key steps stored in `screenshots/` folder.
+- Final GDSII file: `runs/hd_run/results/final/picorv32a.gds`
+- LEF views: `runs/hd_run/results/final/*.lef`
+- LVS and DRC reports: `runs/hd_run/reports/signoff/`
+- Metrics and Manufacturability reports: `runs/hd_run/reports/
