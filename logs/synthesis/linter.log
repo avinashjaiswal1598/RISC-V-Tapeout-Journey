@@ -1,0 +1,106 @@
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:181:13: Signal is not used: 'dbg_insn_addr'
+                                                                         : ... In instance picorv32
+  181 |  reg [31:0] dbg_insn_addr;
+      |             ^~~~~~~~~~~~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.009
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:183:7: Signal is not used: 'dbg_mem_valid'
+                                                                        : ... In instance picorv32
+  183 |  wire dbg_mem_valid = mem_valid;
+      |       ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:184:7: Signal is not used: 'dbg_mem_instr'
+                                                                        : ... In instance picorv32
+  184 |  wire dbg_mem_instr = mem_instr;
+      |       ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:185:7: Signal is not used: 'dbg_mem_ready'
+                                                                        : ... In instance picorv32
+  185 |  wire dbg_mem_ready = mem_ready;
+      |       ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:186:14: Signal is not used: 'dbg_mem_addr'
+                                                                         : ... In instance picorv32
+  186 |  wire [31:0] dbg_mem_addr  = mem_addr;
+      |              ^~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:187:14: Signal is not used: 'dbg_mem_wdata'
+                                                                         : ... In instance picorv32
+  187 |  wire [31:0] dbg_mem_wdata = mem_wdata;
+      |              ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:188:14: Signal is not used: 'dbg_mem_wstrb'
+                                                                         : ... In instance picorv32
+  188 |  wire [ 3:0] dbg_mem_wstrb = mem_wstrb;
+      |              ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:189:14: Signal is not used: 'dbg_mem_rdata'
+                                                                         : ... In instance picorv32
+  189 |  wire [31:0] dbg_mem_rdata = mem_rdata;
+      |              ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:375:7: Signal is not used: 'mem_busy'
+                                                                        : ... In instance picorv32
+  375 |  wire mem_busy = |{mem_do_prefetch, mem_do_rinst, mem_do_rdata, mem_do_wdata};
+      |       ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:695:14: Signal is not used: 'dbg_rs1val'
+                                                                         : ... In instance picorv32
+  695 |   reg [31:0] dbg_rs1val;
+      |              ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:696:14: Signal is not used: 'dbg_rs2val'
+                                                                         : ... In instance picorv32
+  696 |   reg [31:0] dbg_rs2val;
+      |              ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:697:7: Signal is not used: 'dbg_rs1val_valid'
+                                                                        : ... In instance picorv32
+  697 |   reg dbg_rs1val_valid;
+      |       ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:698:7: Signal is not used: 'dbg_rs2val_valid'
+                                                                        : ... In instance picorv32
+  698 |   reg dbg_rs2val_valid;
+      |       ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:767:6: Signal is not used: 'dbg_valid_insn'
+                                                                        : ... In instance picorv32
+  767 |  reg dbg_valid_insn;
+      |      ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /openlane/designs/picorv32a/src/picorv32a.v:1179:15: Signal is not used: 'dbg_ascii_state'
+                                                                          : ... In instance picorv32
+ 1179 |   reg [127:0] dbg_ascii_state;
+      |               ^~~~~~~~~~~~~~~
+%Warning-BLKSEQ: /openlane/designs/picorv32a/src/picorv32a.v:1401:20: Blocking assignment '=' in sequential logic process
+                                                                    : ... Suggest using delayed assignment '<='
+ 1401 |   set_mem_do_rinst = 0;
+      |                    ^
+%Warning-BLKSEQ: /openlane/designs/picorv32a/src/picorv32a.v:1402:20: Blocking assignment '=' in sequential logic process
+                                                                    : ... Suggest using delayed assignment '<='
+ 1402 |   set_mem_do_rdata = 0;
+      |                    ^
+%Warning-BLKSEQ: /openlane/designs/picorv32a/src/picorv32a.v:1403:20: Blocking assignment '=' in sequential logic process
+                                                                    : ... Suggest using delayed assignment '<='
+ 1403 |   set_mem_do_wdata = 0;
+      |                    ^
+%Warning-BLKSEQ: /openlane/designs/picorv32a/src/picorv32a.v:1435:20: Blocking assignment '=' in sequential logic process
+                                                                    : ... Suggest using delayed assignment '<='
+ 1435 |   next_irq_pending = ENABLE_IRQ ? irq_pending & LATCHED_IRQ : 'bx;
+      |                    ^
+%Warning-BLKSEQ: /openlane/designs/picorv32a/src/picorv32a.v:1490:16: Blocking assignment '=' in sequential logic process
+                                                                    : ... Suggest using delayed assignment '<='
+ 1490 |     current_pc = reg_next_pc;
+      |                ^
+%Warning-BLKSEQ: /openlane/designs/picorv32a/src/picorv32a.v:1495:18: Blocking assignment '=' in sequential logic process
+                                                                    : ... Suggest using delayed assignment '<='
+ 1495 |       current_pc = latched_store ? (latched_stalu ? alu_out_q : reg_out) & ~1 : reg_next_pc;
+      |                  ^
+%Warning-BLKSEQ: /openlane/designs/picorv32a/src/picorv32a.v:1814:24: Blocking assignment '=' in sequential logic process
+                                                                    : ... Suggest using delayed assignment '<='
+ 1814 |       set_mem_do_rinst = 1;
+      |                        ^
+%Warning-BLKSEQ: /openlane/designs/picorv32a/src/picorv32a.v:1865:24: Blocking assignment '=' in sequential logic process
+                                                                    : ... Suggest using delayed assignment '<='
+ 1865 |       set_mem_do_wdata = 1;
+      |                        ^
+%Warning-BLKSEQ: /openlane/designs/picorv32a/src/picorv32a.v:1893:24: Blocking assignment '=' in sequential logic process
+                                                                    : ... Suggest using delayed assignment '<='
+ 1893 |       set_mem_do_rdata = 1;
+      |                        ^
+%Warning-BLKSEQ: /openlane/designs/picorv32a/src/picorv32a.v:1469:21: Blocking assignment '=' in sequential logic process
+                                                                    : ... Suggest using delayed assignment '<='
+ 1469 |    next_irq_pending = 0;
+      |                     ^
+%Warning-BLKSEQ: /openlane/designs/picorv32a/src/picorv32a.v:1969:14: Blocking assignment '=' in sequential logic process
+                                                                    : ... Suggest using delayed assignment '<='
+ 1969 |   current_pc = 'bx;
+      |              ^
