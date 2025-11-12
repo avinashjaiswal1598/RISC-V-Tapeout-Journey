@@ -1,6 +1,6 @@
 # 🚀 RISC-V Tapeout Journey – picorv32a ASIC Flow Documentation
 
-This document summarizes the ASIC design flow of the `picorv32a` RISC-V core using OpenLane and Sky130 PDK, following the automated flow from RTL to GDSII, including synthesis, floorplanning, placement, CTS, routing, and signoff.
+This document summarizes the ASIC design flow of the `picorv32a` RISC-V core using OpenLane and Sky130 PDK, following the ASIC flow from RTL to GDSII, including synthesis, floorplanning, placement, CTS, routing, and signoff.
 
 ---
 
@@ -153,6 +153,22 @@ The ASIC flow is executed using OpenLane automated scripts. Below is the structu
 
 <img width="1203" height="651" alt="Routing" src="https://github.com/user-attachments/assets/9acd0d38-d76f-4916-b6f1-24a093a0f5e3" />
 
+### 🧩 Layout Visualization using Magic
+
+After completing the routing stage, I visualized the final layout using **Magic VLSI**.
+
+#### 🧠 Purpose
+This command opens and displays the physical layout of a standard cell or full design inside the **Magic** tool.  
+It helps verify the **geometries, layers, and interconnections** created during routing and ensures that the layout follows the process technology (Sky130A).
+
+#### 🧰 Command Used
+```bash
+magic -T /openlane/pdks/sky130A/libs.tech/magic/sky130A.tech sky130_inv.mag &
+```
+
+<img width="1224" height="767" alt="Screenshot from 2025-11-12 14-13-18" src="https://github.com/user-attachments/assets/827a94be-9183-475b-9878-0e01c0bbb7a2" />
+
+*Layout of the sky130_inv cell opened in Magic, showing active regions, poly gates, and metal interconnections.*
 
 ### ✅ 4.6 Signoff / Verification (Steps 29–46)
 **Purpose:** Verify design correctness, DRC/LVS compliance, parasitic extraction, IR drop, and generate final GDSII.
@@ -171,8 +187,41 @@ The ASIC flow is executed using OpenLane automated scripts. Below is the structu
 
 <img width="1100" height="87" alt="synthesys" src="https://github.com/user-attachments/assets/32a82d6e-75ba-4999-aa75-a26aff3eca88" />
 
-## 📊 5. Summary & Metrics
+<img width="721" height="340" alt="Screenshot from 2025-11-12 15-16-48" src="https://github.com/user-attachments/assets/5f82bf9a-76cc-4119-b87f-81c24c0de97b" />
 
+
+### 🧩 Viewing the Final Layout in Magic
+
+After successfully completing the physical design flow (synthesis, floorplanning, placement, routing, and signoff),  
+I opened the **final GDSII layout** in **Magic VLSI** to visualize the tapeout-ready design.
+
+#### 🧰 Command Used
+```bash
+magic -T /openlane/pdks/sky130A/libs.tech/magic/sky130A.tech /openlane/designs/picorv32a/runs/hd_run/results/final/gds/picorv32.gds &
+```
+<img width="1217" height="481" alt="Screenshot from 2025-11-12 15-13-47" src="https://github.com/user-attachments/assets/d1f8e91f-4e21-4b0a-b4b3-d6033a287cb3" />
+
+<img width="1224" height="567" alt="Screenshot from 2025-11-12 15-06-06" src="https://github.com/user-attachments/assets/61551c64-b4cd-4f97-9e40-0d9e80b77c51" />
+
+<img width="1224" height="567" alt="Screenshot from 2025-11-12 15-04-06" src="https://github.com/user-attachments/assets/0bb52912-56ca-48a5-879f-82522a5596c7" />
+
+💡 About the Layout
+
+The layout represents the physical structure of the RISC-V core (picorv32a):
+
+Rectangular blocks → standard cells (logic gates, buffers, flops).
+
+Colored lines → interconnects on multiple metal layers.
+
+Vias → connections between layers.
+
+Power rails → thick horizontal tracks distributing VDD and VSS.
+
+This layout is the tapeout-ready version of the design — what would actually be fabricated on silicon.
+
+---
+
+## 📊 5. Summary & Metrics
 
 This section provides a concise summary of the design flow outcomes and key metrics.
 
