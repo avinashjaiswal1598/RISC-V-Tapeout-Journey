@@ -1,6 +1,5 @@
 
-# 🚀 **Week 8 – Post-Layout STA & Multi-Corner Timing Signoff for VSDBabySoC**  
-### *Enhanced Professional Documentation with Visuals, Diagrams & Styled Tables*  
+# 🚀 **Week 8 – Post-Layout STA & Timing Signoff for VSDBabySoC**   
 
 ---
 
