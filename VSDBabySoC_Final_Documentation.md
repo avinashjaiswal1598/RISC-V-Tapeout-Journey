@@ -1,7 +1,8 @@
 # VSDBabySoC – Final Stage‑Wise Documentation (RISC-V Tapeout Journey)
 
 > **Author:** Avinash Jaiswal  
-> Platform: VSDIAT (https://vsdiat.vlsisystemdesign.com/)  
+> **Platform:** [VSDIAT](https://vsdiat.vlsisystemdesign.com/)
+
 
 ---
 
