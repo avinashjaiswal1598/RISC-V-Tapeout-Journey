@@ -59,11 +59,83 @@ This makes it an ideal project to transition from simple digital design (Week‑
 
 # 🧰 Stage 0 – Tool & Environment Setup
 
-A clean Linux environment was prepared with all necessary open‑source VLSI tools such as Docker, OpenLane, OpenROAD, Yosys, iverilog, GTKWave, and the SkyWater sky130 PDK.
+## 🗂️ Tasks
+- Install Yosys, GTKWave, Iverilog, OpenSTA, Ngspice, Magic, OpenLANE on Ubuntu
+- Validate installations with sample command runs
+  
+
+## 📝 Step-by-Step Guide
+
+### Yosys Installation
+**Yosys:** An open-source Verilog RTL synthesis tool that converts behavioral hardware designs into gate-level netlists.
+
+```
+sudo apt update
+sudo apt install yosys
+yosys -V # Check version
+```
+<img width="733" height="491" alt="image (1)" src="https://github.com/user-attachments/assets/017f4415-a26b-40a1-b152-132e001119e8" />
+
+### GTKWave
+**GTKWave:** A waveform viewer used to visualize simulation outputs and analyze digital signals during hardware verification.
+```
+sudo apt install GTKWave
+gtkwave --version
+gtkwave  # Open GTKWave GUI
+
+
+```
+
+<img width="1122" height="586" alt="Screenshot from 2025-11-26 18-54-26" src="https://github.com/user-attachments/assets/eb66eb19-fc17-45c0-9446-01553ba48a40" />
+
+
+### Iverilog
+**Iverilog:** A free Verilog simulation and synthesis tool that compiles and runs hardware description language designs for testing and verification.
+```
+sudo apt install iverilog
+iverilog -v  #to verify, if shows it's okay
+vvp -v
+
+```
+<img width="801" height="603" alt="iverilog" src="https://github.com/user-attachments/assets/b1054fb7-4720-4727-97c5-e43f9e2d02eb" />
+
+
+### NGSpice
+
+```
+sudo apt install ngspice
+ngspice -v
+ngspice
+
+```
+<img width="783" height="389" alt="ngspice" src="https://github.com/user-attachments/assets/fb802c09-3f99-4a7c-bd24-190d35a6d3bf" />
+
+### Magic
+
+```
+sudo apt instal magic
+magic -version
+magic
+
+```
+<img width="1056" height="615" alt="magic" src="https://github.com/user-attachments/assets/6004f9b6-c189-4c48-b7dd-dba5a949c3f1" />
 
 
 
+## OpenSTA - Static Timing Analyzer
 
+OpenSTA is a fast and open-source Static Timing Analyzer for VLSI designs.
+
+```
+sudo apt install opensta
+sta --version
+
+```
+<img width="781" height="298" alt="OPENSta" src="https://github.com/user-attachments/assets/5d282597-4f09-404a-a153-016e2f013a31" />
+
+
+### Quick Start
+Run `opensta` on your SDC and SPEF files to analyze timing.
 
 ---
 
@@ -97,182 +169,247 @@ It integrates minimal but representative modules to demonstrate real-world SoC c
 
 ---
 
-# 🧾 Stage 2 – RTL Coding & Testbench
 
+# 🧾 Stage 2 – RTL Coding & Testbench
 
 ## 📁 Repository Setup
 
-Before synthesis, a clean workspace was created:
+Before synthesis, a clean workspace was prepared:
+Stage-2 Folder Structure
 
-```
 BabySoC/
  ├── rtl/
- ├── libs/
+ ├── tb/
  ├── include/
+ ├── macros/        <-- put .lef .lib .gds here
+ │     ├── avsddac.lef
+ │     ├── avsdpll.lef
+ │     ├── avsddac.lib
+ │     ├── avsdpll.lib
+ │     ├── avsddac.gds
+ │     ├── avsdpll.gds
  ├── constraints/
- ├── scripts/
- ├── outputs/reports/
-```
+ ├── docs/
+ └── README.md
 
-Each folder holds logically separated assets for the ASIC flow.
+
+
+Each directory holds logically separated assets required for the ASIC flow.
 
 ---
 
 ## 📂 Directory Structure Explained
 
-### `rtl/`
-Contains only **synthesizable RTL**:
-- `vsdbabysoc.v`
-- `rvmyth.v`
-- `clk_gate.v`
-- `pseudo_rand.sv`
-- `pseudo_rand_gen.sv`
+### **`rtl/`**
+Contains all **synthesizable RTL files**:
+- `vsdbabysoc.v` – top-level module
+- `rvmyth.v` – RISC-V core
+- `clk_gate.v` – clock-gating logic
+- `pseudo_rand.sv`, `pseudo_rand_gen.sv` – PRNG blocks
 
-### `libs/`
-Contains timing models:
-- Standard cell library: `sky130_fd_sc_hd__tt_025C_1v80.lib`
-- Macro timing: `avsdpll.lib`, `avsddac.lib`
+### **`libs/`**
+Timing libraries used for synthesis & STA:
+- `sky130_fd_sc_hd__tt_025C_1v80.lib`
+- `avsdpll.lib`
+- `avsddac.lib`
 
-### `include/`
-Contains TL-Verilog expansion headers:
+### **`include/`**
+TL-Verilog expansion headers:
 - `sp_verilog.vh`
 - `sp_default.vh`
 - `sandpiper.vh`
 - `sandpiper_gen.vh`
 
-### `scripts/`
-Contains the Yosys synthesis script.
+### **`scripts/`**
+Contains Yosys synthesis scripts.
 
-### `outputs/`
-Contains synthesis outputs & reports.
+### **`outputs/`**
+Generated synthesis reports, logs, and netlists.
 
 ---
 
 # 🔍 Understanding RTL Components
 
-### **1. `vsdbabysoc.v`** (Top module)
-Integrates the entire SoC:
-- connects RVMyth core
-- feeds pseudo-random signals
-- interacts with DAC & PLL
+### **1. `vsdbabysoc.v` (Top Module)**
+Integrates:
+- RVMyth core  
+- PRNG  
+- Clock-gating logic  
+- Black-box DAC/PLL macros  
 
-### **2. RVMyth (`rvmyth.v`)**
-Simplified RISC‑V-like processing element.
+Defines all SoC-level connectivity.
+
+### **2. RVMyth Core (`rvmyth.v`)**
+Simplified Verilog version of the TL-Verilog RISC-V pipeline.
 
 ### **3. Clock Gate**
-Used to demonstrate low-power clocking.
+Used to demonstrate simple low-power clock gating concepts.
 
-### **4. `pseudo_rand.sv` / `pseudo_rand_gen.sv`**
-Generates random data for the DAC.
+### **4. PRNG Modules**
+Two synthesizable SystemVerilog modules:
+- `pseudo_rand.sv`
+- `pseudo_rand_gen.sv`
 
-### **5. DAC/PLL RTL are NOT synthesizable**
-They remain **black boxes** using:
-- `.lib` → timing
-- `.lef` → placement
-- `.gds` → final layout
+These generate random data for DAC testing.
 
----
-
-## 🧱 Macro Files (.lib, .lef, .gds)
-These represent the **hard macros** of the design.
-
-### ✔ `.lib` – Timing Models
-Used in synthesis and OpenSTA for:
-- delay estimation
-- setup/hold checks
-
-### ✔ `.lef` – Layout Template
-Used in floorplanning for:
-- block dimensions
-- pin locations
-
-### ✔ `.gds` – Final Layout
-Used in final chip-level GDS stitching.
+### **5. Hard Macros**
+The DAC (`avsddac`) and PLL (`avsdpll`) are **not synthesizable**.  
+They are represented using:
+- `.lib` – timing  
+- `.lef` – physical abstract  
+- `.gds` – final layout  
 
 ---
 
-## 📌 Include Files (.vh) and Their Role
-The BabySoC uses TL-Verilog originally.
-During RVMyth expansion, these headers are referenced.
+# 🧱 Macro File Types
 
-Examples:
-- `sp_verilog.vh`
-- `sandpiper.vh`
+### ✔ `.lib` — Timing Model  
+Used in synthesis & STA for delay estimation.
 
-They contain:
-- Macro expansions
-- Simulation constructs
-- Code parameters
+### ✔ `.lef` — Physical Layout Abstract  
+Defines macro dimensions & pin placement.
 
-Without them, Yosys will throw *include not found* errors.
+### ✔ `.gds` — Actual Layout  
+Used during final GDS merge.
 
 ---
 
-# 🛠️ Preparing the 
+# 📌 Include Files (.vh)  
+Required because RVMyth originates from TL-Verilog.  
+These provide generated Verilog expansions and macros.
 
-### Copy RTL
+---
+
+# 🛠️ Preparing the Design
+
+### Copy RTL files
 ```bash
 cp ~/vsdbabysoc/src/module/*.v ~/BabySoC/rtl/
 cp ~/vsdbabysoc/src/module/*.sv ~/BabySoC/rtl/
-```
 
+```
 ### Copy Libraries
 ```bash
 cp ~/vsdbabysoc/src/lib/*.lib ~/BabySoC/libs/
-```
 
+```
 ### Copy Include Files
-```bash
+
+```
 mkdir -p ~/BabySoC/include
 cp ~/vsdbabysoc/src/include/*.vh ~/BabySoC/include/
 ```
+🧪 Creating Synthesizable rvmyth.v
+Since TL-Verilog (SandPiper) may not be available locally,
+a pre-expanded synthesizable rvmyth.v is used.
+
+This:
+
+-removes TL-Verilog dependency
+
+-works directly with Yosys
+
+-matches the official VSD workshop flow
 
 ---
 
-# 🧪 Creating Synthesizable `rvmyth.v`
-
-Since SandPiper tool may not be installed locally, a **precompiled synthesizable `rvmyth.v`** was added.
-
-This version:
-- does not require TL-Verilog
-- works directly with Yosys
-- matches the official VSD workshop flow
-
-
-
-## 🛠️ Preparing the design
-
-### Copy RTL
-```bash
-cp ~/vsdbabysoc/src/module/*.v ~/BabySoC/rtl/
-cp ~/vsdbabysoc/src/module/*.sv ~/BabySoC/rtl/
-```
-
-### Copy Libraries
-```bash
-cp ~/vsdbabysoc/src/lib/*.lib ~/BabySoC/libs/
-```
-
-### Copy Include Files
-```bash
-mkdir -p ~/BabySoC/include
-cp ~/vsdbabysoc/src/include/*.vh ~/BabySoC/include/
-```
-
-
-## 🧪 Creating Synthesizable `rvmyth.v`
-
-Since SandPiper tool may not be installed locally, a **precompiled synthesizable `rvmyth.v`** was added.
-
-This version:
-- does not require TL-Verilog
-- works directly with Yosys
-- matches the official VSD workshop flow
-op flow
-
----
 
 # 🧪 Stage 3 – Functional Simulation
+
+Functional simulation checks whether the RTL behaves correctly **before synthesis**.  
+This validates the RVMyth core, pseudo-random generator, clock gating, and macro interfaces.
+
+---
+
+## 🎯 Objective
+- Verify RTL logic  
+- Validate integration of all modules  
+- Ensure correct clock + reset behavior  
+- Check random generator output  
+- Confirm no X/Z values in waveforms
+---
+
+## 📁 Simulation Directory Structure
+
+sim/
+├── tb_vsdbabysoc.v
+├── run_sim.sh
+├── dump.vcd
+
+
+---
+
+## ▶️ Commands to Run Functional Simulation (Icarus Verilog)
+
+### **1. Compile RTL + Testbench**
+```bash
+iverilog -o sim.out \
+  ../rtl/vsdbabysoc.v \
+  ../rtl/rvmyth.v \
+  ../rtl/pseudo_rand.sv \
+  ../rtl/pseudo_rand_gen.sv \
+  tb_vsdbabysoc.v
+
+2. Run Simulation
+```
+./sim.out
+```
+3. View Waveform in GTKWave
+```
+gtkwave dump.vcd &
+```
+
+🧩 Minimal Testbench (tb_vsdbabysoc.v)
+
+```
+module tb_vsdbabysoc();
+    reg clk, reset;
+
+    // DUT
+    vsdbabysoc dut (
+        .clk(clk),
+        .reset(reset)
+    );
+
+    // 100 MHz clock
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+    // Reset
+    initial begin
+        reset = 1;
+        #20 reset = 0;
+    end
+
+    // VCD dump
+    initial begin
+        $dumpfile("dump.vcd");
+        $dumpvars(0, tb_vsdbabysoc);
+    end
+endmodule
+```
+
+✔️ Expected Results
+
+You should observe:
+
+-Proper instruction flow inside RVMyth
+
+-Random data generation
+
+-Clock + reset behavior as expected
+
+-DAC input bus toggling
+
+-No undefined X/Z states
+
+### A clean simulation confirms the design is ready for Stage 4 – Synthesis.
+
+
+
+
 
 Performed basic functional verification and confirmed signal activity correctness.
 
