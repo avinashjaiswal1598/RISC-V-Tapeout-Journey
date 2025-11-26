@@ -99,9 +99,12 @@ It integrates minimal but representative modules to demonstrate real-world SoC c
 
 # 🧾 Stage 2 – RTL Coding & Testbench
 
-📁 Repository Setup
+
+## 📁 Repository Setup
+
 Before synthesis, a clean workspace was created:
 
+```
 BabySoC/
  ├── rtl/
  ├── libs/
@@ -109,104 +112,163 @@ BabySoC/
  ├── constraints/
  ├── scripts/
  ├── outputs/reports/
+```
+
 Each folder holds logically separated assets for the ASIC flow.
 
-📂 Directory Structure Explained
-rtl/
-Contains only synthesizable RTL:
+---
 
-vsdbabysoc.v
-rvmyth.v
-clk_gate.v
-pseudo_rand.sv
-pseudo_rand_gen.sv
-libs/
+## 📂 Directory Structure Explained
+
+### `rtl/`
+Contains only **synthesizable RTL**:
+- `vsdbabysoc.v`
+- `rvmyth.v`
+- `clk_gate.v`
+- `pseudo_rand.sv`
+- `pseudo_rand_gen.sv`
+
+### `libs/`
 Contains timing models:
+- Standard cell library: `sky130_fd_sc_hd__tt_025C_1v80.lib`
+- Macro timing: `avsdpll.lib`, `avsddac.lib`
 
-Standard cell library: sky130_fd_sc_hd__tt_025C_1v80.lib
-Macro timing: avsdpll.lib, avsddac.lib
-include/
+### `include/`
 Contains TL-Verilog expansion headers:
+- `sp_verilog.vh`
+- `sp_default.vh`
+- `sandpiper.vh`
+- `sandpiper_gen.vh`
 
-sp_verilog.vh
-sp_default.vh
-sandpiper.vh
-sandpiper_gen.vh
-scripts/
+### `scripts/`
 Contains the Yosys synthesis script.
 
-outputs/
+### `outputs/`
 Contains synthesis outputs & reports.
 
-🔍 Understanding RTL Components
-1. vsdbabysoc.v (Top module)
-Integrates the entire SoC:
+---
 
-connects RVMyth core
-feeds pseudo-random signals
-interacts with DAC & PLL
-2. RVMyth (rvmyth.v)
+# 🔍 Understanding RTL Components
+
+### **1. `vsdbabysoc.v`** (Top module)
+Integrates the entire SoC:
+- connects RVMyth core
+- feeds pseudo-random signals
+- interacts with DAC & PLL
+
+### **2. RVMyth (`rvmyth.v`)**
 Simplified RISC‑V-like processing element.
 
-3. Clock Gate
+### **3. Clock Gate**
 Used to demonstrate low-power clocking.
 
-4. pseudo_rand.sv / pseudo_rand_gen.sv
+### **4. `pseudo_rand.sv` / `pseudo_rand_gen.sv`**
 Generates random data for the DAC.
 
-5. DAC/PLL RTL are NOT synthesizable
-They remain black boxes using:
+### **5. DAC/PLL RTL are NOT synthesizable**
+They remain **black boxes** using:
+- `.lib` → timing
+- `.lef` → placement
+- `.gds` → final layout
 
-.lib → timing
-.lef → placement
-.gds → final layout
-🧱 Macro Files (.lib, .lef, .gds)
-These represent the hard macros of the design.
+---
 
-✔ .lib – Timing Models
+## 🧱 Macro Files (.lib, .lef, .gds)
+These represent the **hard macros** of the design.
+
+### ✔ `.lib` – Timing Models
 Used in synthesis and OpenSTA for:
+- delay estimation
+- setup/hold checks
 
-delay estimation
-setup/hold checks
-✔ .lef – Layout Template
+### ✔ `.lef` – Layout Template
 Used in floorplanning for:
+- block dimensions
+- pin locations
 
-block dimensions
-pin locations
-✔ .gds – Final Layout
+### ✔ `.gds` – Final Layout
 Used in final chip-level GDS stitching.
 
-📌 Include Files (.vh) and Their Role
-The BabySoC uses TL-Verilog originally. During RVMyth expansion, these headers are referenced.
+---
+
+## 📌 Include Files (.vh) and Their Role
+The BabySoC uses TL-Verilog originally.
+During RVMyth expansion, these headers are referenced.
 
 Examples:
+- `sp_verilog.vh`
+- `sandpiper.vh`
 
-sp_verilog.vh
-sandpiper.vh
 They contain:
+- Macro expansions
+- Simulation constructs
+- Code parameters
 
-Macro expansions
-Simulation constructs
-Code parameters
-Without them, Yosys will throw include not found errors.
+Without them, Yosys will throw *include not found* errors.
 
-🛠️ Preparing the Workspace
-Copy RTL
+---
+
+# 🛠️ Preparing the 
+
+### Copy RTL
+```bash
 cp ~/vsdbabysoc/src/module/*.v ~/BabySoC/rtl/
 cp ~/vsdbabysoc/src/module/*.sv ~/BabySoC/rtl/
-Copy Libraries
+```
+
+### Copy Libraries
+```bash
 cp ~/vsdbabysoc/src/lib/*.lib ~/BabySoC/libs/
-Copy Include Files
+```
+
+### Copy Include Files
+```bash
 mkdir -p ~/BabySoC/include
 cp ~/vsdbabysoc/src/include/*.vh ~/BabySoC/include/
-🧪 Creating Synthesizable rvmyth.v
-Since SandPiper tool may not be installed locally, a precompiled synthesizable rvmyth.v was added.
+```
+
+---
+
+# 🧪 Creating Synthesizable `rvmyth.v`
+
+Since SandPiper tool may not be installed locally, a **precompiled synthesizable `rvmyth.v`** was added.
 
 This version:
+- does not require TL-Verilog
+- works directly with Yosys
+- matches the official VSD workshop flow
 
-does not require TL-Verilog
-works directly with Yosys
-matches the official VSD workshop flow
+
+
+## 🛠️ Preparing the design
+
+### Copy RTL
+```bash
+cp ~/vsdbabysoc/src/module/*.v ~/BabySoC/rtl/
+cp ~/vsdbabysoc/src/module/*.sv ~/BabySoC/rtl/
+```
+
+### Copy Libraries
+```bash
+cp ~/vsdbabysoc/src/lib/*.lib ~/BabySoC/libs/
+```
+
+### Copy Include Files
+```bash
+mkdir -p ~/BabySoC/include
+cp ~/vsdbabysoc/src/include/*.vh ~/BabySoC/include/
+```
+
+
+## 🧪 Creating Synthesizable `rvmyth.v`
+
+Since SandPiper tool may not be installed locally, a **precompiled synthesizable `rvmyth.v`** was added.
+
+This version:
+- does not require TL-Verilog
+- works directly with Yosys
+- matches the official VSD workshop flow
+op flow
 
 ---
 
@@ -219,6 +281,125 @@ Performed basic functional verification and confirmed signal activity correctnes
 ---
 
 # 🏭 Stage 4 – Synthesis (RTL → Netlist)
+
+
+# 📝 Final Yosys Synthesis Script
+
+This script fully synthesizes BabySoC while treating PLL & DAC as **black-box macros**.
+
+```tcl
+# ================================
+#  VSDBabySoC - Yosys Synthesis
+# ================================
+
+# ---- Read RTL Files (with include path) ----
+read_verilog -I../include ../rtl/vsdbabysoc.v
+read_verilog -I../include ../rtl/clk_gate.v
+read_verilog -I../include ../rtl/pseudo_rand.sv
+read_verilog -I../include ../rtl/pseudo_rand_gen.sv
+read_verilog -I../include ../rtl/rvmyth.v
+
+# ---- Read Liberty Libraries ----
+read_liberty -lib ../libs/avsdpll.lib
+read_liberty -lib ../libs/avsddac.lib
+read_liberty -lib ../libs/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# ---- Synthesis ----
+synth -top vsdbabysoc
+
+dfflibmap -liberty ../libs/sky130_fd_sc_hd__tt_025C_1v80.lib
+opt
+abc -liberty ../libs/sky130_fd_sc_hd__tt_025C_1v80.lib
+flatten
+setundef -zero
+clean -purge
+rename -enumerate
+
+# ---- Reports & Output ----
+stat > ../outputs/reports/synth_stat.rpt
+write_verilog -noattr ../outputs/vsdbabysoc_synth.v
+write_json ../outputs/vsdbabysoc_synth.json
+```
+
+---
+
+# ▶️ Running Synthesis
+
+```bash
+cd ~/BabySoC/scripts
+yosys yosys.ys | tee ../outputs/reports/yosys_run.log
+```
+
+The synthesis:
+- Loads all RTL
+- Maps to Sky130 HD cells
+- Treats PLL & DAC as black-box macros
+- Produces gate-level netlist
+
+---
+
+# 📊 Generated Outputs
+You will find the following:
+
+### ✔ `vsdbabysoc_synth.v`
+Gate-level netlist with:
+- mapped standard cells
+- instantiated macros
+
+### ✔ `vsdbabysoc_synth.json`
+JSON version of netlist.
+
+### ✔ `synth_stat.rpt`
+Resource usage summary:
+- number of DFFs
+- gate count
+- area estimate
+
+### ✔ `yosys_run.log`
+Complete synthesis log.
+
+---
+
+# 📡 Understanding the SPEF File
+
+Although SPEF is generated **after routing**, Week‑7 emphasizes learning its purpose.
+
+SPEF = **Standard Parasitic Exchange Format**
+
+It contains:
+- **RC values** (resistance, capacitance)
+- Net delays extracted after routing
+- Coupling capacitances
+- Wire length contributions
+
+SPEF is essential for:
+- Post-route STA (setup/hold analysis)
+- Understanding real-world interconnect delays
+- Closing timing on advanced nodes
+
+In VSDBabySoC flow, SPEF will be generated in later steps using:
+```
+OpenROAD → parasitic extraction → write_spef
+```
+
+Even at Week‑7 stage, it is important to understand that:
+- RTL synthesis uses estimated wire loads
+- The SPEF allows timing tools to use *real parasitics* instead
+
+This bridges the gap between **logical** and **physical** design.
+
+---
+
+# 🏁 Conclusion
+
+Week‑7 establishes strong foundations for:
+
+- Understanding SoC-level integration
+- Working with hard macros
+- Managing TL-Verilog based include structures
+- Synthesizing mixed RTL + macro designs
+- Preparing for physical design
+- Understanding SPEF's importance in timing closure
 
 <img width="1062" height="574" alt="image" src="https://github.com/user-attachments/assets/13d1a2c4-a184-4c8b-9c9d-6ff234524932" />
 
