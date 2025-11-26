@@ -71,20 +71,142 @@ A clean Linux environment was prepared with all necessary open‑source VLSI too
 
 <img width="2270" height="1260" alt="image" src="https://github.com/user-attachments/assets/41a1d211-411c-4e67-9284-4d0c5478dd98" />
 
+🏛️ SoC Architecture Overview
+The VSDBabySoC integrates:
+
+✔ RVMyth RISC-V Core
+Originally written in TL-Verilog → compiled into synthesizable Verilog.
+
+✔ Clock Gating Logic
+Used for low-power operation.
+
+✔ Pseudo Random Generator
+Provides random inputs for DAC testing.
+
+✔ Hard Macros
+avsdpll → Generates system clock
+avsddac → Converts digital random values into analog output
+⚠ Note: PLL & DAC have their own layouts, timing models, and behavioral models. They cannot be synthesized.
+
+
 A System-on-Chip integrates multiple subsystems — processor, memory, I/O controllers, clocks and power management — on a single silicon die.
 It enables compact, power-efficient designs used in smartphones, IoT devices, and embedded systems.
 
 BabySoC offers a simplified SoC architecture that is ideal for learning without overwhelming complexity.
 It integrates minimal but representative modules to demonstrate real-world SoC concepts and dataflow.
 
-Reviewed BabySoC CPU architecture, design hierarchy, memory map, and module-level connectivity.
-
 ---
 
 # 🧾 Stage 2 – RTL Coding & Testbench
 
-Reviewed reference RTL modules and testbenches.  
-Simulated using iverilog → vvp → GTKWave.
+📁 Repository Setup
+Before synthesis, a clean workspace was created:
+
+BabySoC/
+ ├── rtl/
+ ├── libs/
+ ├── include/
+ ├── constraints/
+ ├── scripts/
+ ├── outputs/reports/
+Each folder holds logically separated assets for the ASIC flow.
+
+📂 Directory Structure Explained
+rtl/
+Contains only synthesizable RTL:
+
+vsdbabysoc.v
+rvmyth.v
+clk_gate.v
+pseudo_rand.sv
+pseudo_rand_gen.sv
+libs/
+Contains timing models:
+
+Standard cell library: sky130_fd_sc_hd__tt_025C_1v80.lib
+Macro timing: avsdpll.lib, avsddac.lib
+include/
+Contains TL-Verilog expansion headers:
+
+sp_verilog.vh
+sp_default.vh
+sandpiper.vh
+sandpiper_gen.vh
+scripts/
+Contains the Yosys synthesis script.
+
+outputs/
+Contains synthesis outputs & reports.
+
+🔍 Understanding RTL Components
+1. vsdbabysoc.v (Top module)
+Integrates the entire SoC:
+
+connects RVMyth core
+feeds pseudo-random signals
+interacts with DAC & PLL
+2. RVMyth (rvmyth.v)
+Simplified RISC‑V-like processing element.
+
+3. Clock Gate
+Used to demonstrate low-power clocking.
+
+4. pseudo_rand.sv / pseudo_rand_gen.sv
+Generates random data for the DAC.
+
+5. DAC/PLL RTL are NOT synthesizable
+They remain black boxes using:
+
+.lib → timing
+.lef → placement
+.gds → final layout
+🧱 Macro Files (.lib, .lef, .gds)
+These represent the hard macros of the design.
+
+✔ .lib – Timing Models
+Used in synthesis and OpenSTA for:
+
+delay estimation
+setup/hold checks
+✔ .lef – Layout Template
+Used in floorplanning for:
+
+block dimensions
+pin locations
+✔ .gds – Final Layout
+Used in final chip-level GDS stitching.
+
+📌 Include Files (.vh) and Their Role
+The BabySoC uses TL-Verilog originally. During RVMyth expansion, these headers are referenced.
+
+Examples:
+
+sp_verilog.vh
+sandpiper.vh
+They contain:
+
+Macro expansions
+Simulation constructs
+Code parameters
+Without them, Yosys will throw include not found errors.
+
+🛠️ Preparing the Workspace
+Copy RTL
+cp ~/vsdbabysoc/src/module/*.v ~/BabySoC/rtl/
+cp ~/vsdbabysoc/src/module/*.sv ~/BabySoC/rtl/
+Copy Libraries
+cp ~/vsdbabysoc/src/lib/*.lib ~/BabySoC/libs/
+Copy Include Files
+mkdir -p ~/BabySoC/include
+cp ~/vsdbabysoc/src/include/*.vh ~/BabySoC/include/
+🧪 Creating Synthesizable rvmyth.v
+Since SandPiper tool may not be installed locally, a precompiled synthesizable rvmyth.v was added.
+
+This version:
+
+does not require TL-Verilog
+works directly with Yosys
+matches the official VSD workshop flow
 
 ---
 
@@ -97,20 +219,6 @@ Performed basic functional verification and confirmed signal activity correctnes
 ---
 
 # 🏭 Stage 4 – Synthesis (RTL → Netlist)
-
-Pre-Synthesis Simulation Waveform Analysis
-The pre-synthesis simulation of VSDBabySoC was analyzed using GTKWave. The main signals observed were:
-
-clk – System clock signal. Provides timing reference for all synchronous modules.
-reset – Active high reset. Initially asserted to initialize the system and de-asserted after 120 ns to start normal operation.
-vco_in – Input to the VCO block of the DAC/PLL. Toggles according to the VCO frequency after reset.
-out – DAC output signal. Starts producing values after reset de-assertion, representing the digital-to-analog conversion.
-ENb_VCO – VCO enable signal. Kept high (1) during simulation to ensure continuous VCO operation.
-Observations:
-
-clk and vco_in toggle periodically after reset de-assertion.
-ENb_VCO = 1 ensures the VCO remains active.
-DAC output (out) shows expected waveform after reset, confirming correct operation of the SoC modules.
 
 <img width="1062" height="574" alt="image" src="https://github.com/user-attachments/assets/13d1a2c4-a184-4c8b-9c9d-6ff234524932" />
 
