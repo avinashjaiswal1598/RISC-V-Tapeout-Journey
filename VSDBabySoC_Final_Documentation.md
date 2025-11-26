@@ -3,6 +3,7 @@
 > **Author:** Avinash Jaiswal  
 > **Platform:** [VSDIAT](https://vsdiat.vlsisystemdesign.com/)
 
+<img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/005076f3-40ef-4a04-8ff9-787f9e79c717" />
 
 ---
 
@@ -33,6 +34,10 @@ RISC-V-Tapeout-Final/
 # 🧰 Stage 0 – Tool & Environment Setup
 
 A clean Linux environment was prepared with all necessary open‑source VLSI tools such as Docker, OpenLane, OpenROAD, Yosys, iverilog, GTKWave, and the SkyWater sky130 PDK.
+
+
+
+
 
 ---
 
