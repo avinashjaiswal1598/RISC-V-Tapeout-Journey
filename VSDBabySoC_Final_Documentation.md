@@ -796,7 +796,6 @@ Build failures due to version mismatches were resolved by verifying versions (cm
 
 ## Purpose: Connect all placed cells and macros electrically while satisfying design rules and timing constraints.
 
-<img width="1203" height="651" alt="image" src="https://github.com/user-attachments/assets/d87f591e-4771-4106-87dc-a396154493b2" />
 
 🧩 Layout Visualization using Magic
 After completing the routing stage, I visualized the final layout using Magic VLSI.
