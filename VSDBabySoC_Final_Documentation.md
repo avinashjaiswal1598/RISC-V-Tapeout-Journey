@@ -3,7 +3,9 @@
 > **Author:** Avinash Jaiswal  
 > **Platform:** [VSDIAT](https://vsdiat.vlsisystemdesign.com/)
 
+
 <img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/005076f3-40ef-4a04-8ff9-787f9e79c717" />
+
 
 ---
 
@@ -17,7 +19,9 @@ For each stage, I included:
 - My understanding of the process  
 - Important observations  
 
+
 ---
+
 
 # 📂 Repository Structure
 
@@ -139,11 +143,14 @@ Run `opensta` on your SDC and SPEF files to analyze timing.
 
 ---
 
+
 # 🧱 Stage 1 – Design Definition & Architecture
 
 <img width="2270" height="1260" alt="image" src="https://github.com/user-attachments/assets/41a1d211-411c-4e67-9284-4d0c5478dd98" />
 
-🏛️ SoC Architecture Overview
+
+## 🏛️ SoC Architecture Overview
+
 The VSDBabySoC integrates:
 
 ✔ RVMyth RISC-V Core
@@ -175,6 +182,8 @@ It integrates minimal but representative modules to demonstrate real-world SoC c
 ## 📁 Repository Setup
 
 Before synthesis, a clean workspace was prepared:
+
+```
 Stage-2 Folder Structure
 
 BabySoC/
@@ -191,8 +200,7 @@ BabySoC/
  ├── constraints/
  ├── docs/
  └── README.md
-
-
+```
 
 Each directory holds logically separated assets required for the ASIC flow.
 
@@ -327,21 +335,24 @@ This validates the RVMyth core, pseudo-random generator, clock gating, and macro
 - Ensure correct clock + reset behavior  
 - Check random generator output  
 - Confirm no X/Z values in waveforms
+  
 ---
 
 ## 📁 Simulation Directory Structure
 
+```
 sim/
 ├── tb_vsdbabysoc.v
 ├── run_sim.sh
 ├── dump.vcd
-
+```
 
 ---
 
 ## ▶️ Commands to Run Functional Simulation (Icarus Verilog)
 
 ### **1. Compile RTL + Testbench**
+
 ```bash
 iverilog -o sim.out \
   ../rtl/vsdbabysoc.v \
@@ -349,17 +360,19 @@ iverilog -o sim.out \
   ../rtl/pseudo_rand.sv \
   ../rtl/pseudo_rand_gen.sv \
   tb_vsdbabysoc.v
+```
+### **2. Run Simulation**
 
-2. Run Simulation
 ```
 ./sim.out
 ```
-3. View Waveform in GTKWave
+### **3. View Waveform in GTKWave**
+
 ```
 gtkwave dump.vcd &
 ```
 
-🧩 Minimal Testbench (tb_vsdbabysoc.v)
+## 🧩 Minimal Testbench (tb_vsdbabysoc.v)
 
 ```
 module tb_vsdbabysoc();
@@ -391,7 +404,7 @@ module tb_vsdbabysoc();
 endmodule
 ```
 
-✔️ Expected Results
+## ✔️ Expected Results
 
 You should observe:
 
@@ -406,9 +419,6 @@ You should observe:
 -No undefined X/Z states
 
 ### A clean simulation confirms the design is ready for Stage 4 – Synthesis.
-
-
-
 
 
 Performed basic functional verification and confirmed signal activity correctness.
@@ -529,7 +539,7 @@ This bridges the gap between **logical** and **physical** design.
 
 # 🏁 Conclusion
 
-Week‑7 establishes strong foundations for:
+This task establishes strong foundations for:
 
 - Understanding SoC-level integration
 - Working with hard macros
@@ -540,21 +550,25 @@ Week‑7 establishes strong foundations for:
 
 <img width="1062" height="574" alt="image" src="https://github.com/user-attachments/assets/13d1a2c4-a184-4c8b-9c9d-6ff234524932" />
 
-Troubleshooting (Detailed Case Study – Issue #28)
-🧩 Problem Encountered
+## Troubleshooting (Detailed Case Study – Issue #28)
+
+### 🧩 Problem Encountered
+
 While simulating the BabySoC design, iverilog threw multiple module hierarchy and inclusion errors, similar to those discussed in India RISC-V Tapeout Issue #28.
 The compiler failed to recognize interlinked modules (avsddac, avsdpll, and top-level vsdbabysoc.v), causing incomplete netlist generation.
 
-⚙️ Root Cause Analysis
+### ⚙️ Root Cause Analysis
 Incorrect include paths for module directories during compilation.
 Missing macro definition (-DPRE_SYNTH_SIM) while invoking iverilog.
 Verilog source files were spread across multiple folders (src/module, src/include), requiring explicit linking.
 I had initially assumed iverilog would automatically detect all submodules, which is incorrect — explicit inclusion is mandatory.
-🔧 Corrective Steps Implemented
-# Step 1: Identified all submodule file paths
+
+### 🔧 Corrective Steps Implemented
+
+## **Step 1: Identified all submodule file paths**
 find src/module -type f -name "*.v"
 
-# Step 2: Compiled with explicit include and macro
+## **Step 2: Compiled with explicit include and macro**
 iverilog -g2012 -o output/pre_synth_sim/pre_synth_sim.out -DPRE_SYNTH_SIM \
   -I src/module \
   src/module/testbench.v \
@@ -562,7 +576,7 @@ iverilog -g2012 -o output/pre_synth_sim/pre_synth_sim.out -DPRE_SYNTH_SIM \
   src/module/avsddac.v \
   src/module/avsdpll.v
 
-# Step 3: Verified simulation output and waveform dump
+## **Step 3: Verified simulation output and waveform dump**
 vvp output/pre_synth_sim/pre_synth_sim.out
 gtkwave output/pre_synth_sim/pre_synth_sim.vcd 
 
@@ -573,19 +587,28 @@ Yosys	RTL to Gate-Level Netlist Synthesis
 Icarus Verilog (iverilog)	Simulation engine for functional and GLS runs
 GTKWave	Waveform visualization and comparison
 OpenSTA	Static Timing Analysis – setup/hold, slack, and critical path checks
-⚙️ Part 1 – Post-Synthesis GLS (Yosys + Icarus + GTKWave)
-🧩 Step 1: Synthesis of BabySoC Design
+
+## ⚙️ Part 1 – Post-Synthesis GLS (Yosys + Icarus + GTKWave)
+## 🧩 Step 1: Synthesis of BabySoC Design
+
 # Run Yosys synthesis script
- cd ~/VSDBabySoC
+ 
+ ```
+cd ~/VSDBabySoC
  make synth
-🧩 Step 2: Run Gate-Level Simulation (GLS)
- cd ~/VSDBabySoC
+```
+
+## 🧩 Step 2: Run Gate-Level Simulation (GLS)
+ ```
+cd ~/VSDBabySoC
  make post_synth_sim
+```
 
 <img width="1153" height="385" alt="image" src="https://github.com/user-attachments/assets/f0aa5184-feff-409d-8b39-49fc603123fb" />
 
-View and Compare Waveforms
+### View and Compare Waveforms
 Open GTKWave to view post-synthesis output and compare it with functional simulation.
+
 ```
  gtkwave output/post_synth_sim/post_synth_sim.vcd
 
